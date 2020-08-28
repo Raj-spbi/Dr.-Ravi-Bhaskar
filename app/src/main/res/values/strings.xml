@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">Dr Ravi Bhaskar</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="share">Share With</string>
+    <string name="aboutdr">Dr. Ravi BHASKAR Clinic, Lucknow is founded by Dr. Ravi BHASKAR (Consultant Chest Physician and interventional Pulmonologist). Dr. Ravi BHASKAR Clinic is providing comprehensive care to the patients suffering from lungs related diseases. It is the first full time dedicative pulmonary clinic in the center of city. Dr. Ravi BHASKAR Clinic also engaged in research programs in the field of pulmonology. We also conducts Lung awareness talk and seminar at our clinic on regular bases. Dr. Ravi BHASKAR Clinic provides best treatment for asthma in Lucknow city.</string>
+    <string name="aboutmore">Dr. Ravi BHASKAR Clinic is situated in heart of the city, Lucknow which is an easily accessible, friendly and cost-effective clinic for all your lung problems. Services provided by the Clinic Treatment of most of the conditions affecting the lung viz Asthma (adults and children), Chronic Obstructive Pulmonary Disease (COPD) , Allergy , Interstitial Lung Disease and Sleep Disorders etc. The clinic also has also provides PULMONARY FUNCTION TESTING to test your lungs and keep track of the treatment. The Centre is a one of its kind clinic specializing in the treatment of Asthma, Allergies, Tuberculosis and other chest diseases.</string>
+    <array name="gender">
+        <item>Choose Gender</item>
+        <item>Female</item>
+        <item>Male</item>
+    </array>
 </resources>

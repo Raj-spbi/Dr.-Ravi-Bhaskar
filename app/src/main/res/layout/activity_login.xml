@@ -1,0 +1,88 @@
+<RelativeLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/first"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android" >
+
+        <LinearLayout
+            android:layout_marginTop="6dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/banner_logo" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Login Now"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/poppins_medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:hint="User Name"
+            android:inputType="textEmailAddress"
+            android:background="@drawable/edittextback"
+            android:id="@+id/et_UserName"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:background="@drawable/edittextback"
+            android:id="@+id/et_password"/>
+
+        <com.skydoves.elasticviews.ElasticButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="30dp"
+            android:text="Login Now"
+            android:background="@drawable/btn_back"
+            android:textColor="@android:color/white"
+            android:textAllCaps="false"
+            android:id="@+id/btn_login"/>
+
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Forget Password"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="15dp"
+            android:textColor="@android:color/black"
+            android:id="@+id/txt_forgotPassword"/>
+
+    </LinearLayout>
+    <com.skydoves.elasticviews.ElasticButton
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:text="Don't Have Account ?"
+        android:textSize="12dp"
+        android:background="@drawable/btn_bg"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/btn_register"/>
+</RelativeLayout>
