@@ -10,10 +10,10 @@
         android:padding="5dp"
         android:elevation="4dp"
         android:translationZ="6dp"
-        android:text="Notifications"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/recyclerView"/>
+        android:text="Appointment History"/>
+<androidx.recyclerview.widget.RecyclerView
+    android:layout_marginTop="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/recyclerView"/>
 </LinearLayout>

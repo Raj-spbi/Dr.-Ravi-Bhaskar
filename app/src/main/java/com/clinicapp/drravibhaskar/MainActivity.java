@@ -25,11 +25,13 @@ import android.widget.Toast;
 import com.clinicapp.drravibhaskar.activities.LoginActivity;
 import com.clinicapp.drravibhaskar.activities.MessageActivity;
 import com.clinicapp.drravibhaskar.fragments.AboutUsFragment;
+import com.clinicapp.drravibhaskar.fragments.AppointmentHistory;
 import com.clinicapp.drravibhaskar.fragments.ChangePasswordFragment;
 import com.clinicapp.drravibhaskar.fragments.ContactUsFragment;
 import com.clinicapp.drravibhaskar.fragments.EveningFragment;
 import com.clinicapp.drravibhaskar.fragments.HomeFragment;
 import com.clinicapp.drravibhaskar.fragments.MorningFragment;
+import com.clinicapp.drravibhaskar.fragments.NotificationFragment;
 import com.clinicapp.drravibhaskar.fragments.PrivacyAndPolicy;
 import com.clinicapp.drravibhaskar.fragments.ProfileFragment;
 import com.clinicapp.drravibhaskar.fragments.TermsAndCondition;
@@ -221,7 +223,7 @@ public class MainActivity extends AppCompatActivity {
                         FragmentTransaction fragmentTransaction1=fragmentManager1.beginTransaction();
                         switch (item.getItemId()) {
                             case R.id.appointments:
-                                fragmentTransaction1.replace(R.id.container,new EveningFragment());
+                                fragmentTransaction1.replace(R.id.container,new AppointmentHistory());
 //                                Toast.makeText(MainActivity.this, "Feature", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.myhome:
@@ -229,7 +231,7 @@ public class MainActivity extends AppCompatActivity {
 //                                Toast.makeText(MainActivity.this, "Shedules", Toast.LENGTH_SHORT).show();
                                 break;
                             case R.id.notification:
-                                fragmentTransaction1.replace(R.id.container,new MorningFragment());
+                                fragmentTransaction1.replace(R.id.container,new NotificationFragment());
 //                                Toast.makeText(MainActivity.this, "Music", Toast.LENGTH_SHORT).show();
                                 break;
                         }
