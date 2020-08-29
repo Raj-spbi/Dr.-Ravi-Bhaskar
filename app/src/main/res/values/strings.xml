@@ -12,4 +12,8 @@
         <item>Female</item>
         <item>Male</item>
     </array>
+
+    <string name="policy">This Privacy Policy together with our Terms of Website Use sets out the basis on which any personal data we collect from you, or that you provide to us, will be processed by us. Please read the following carefully to understand our views and practices regarding your personal data and how we will treat it.</string>
+    <string name="term">These Terms of Website Use together with our Acceptable Use Policy and our Privacy Policy tells you the terms of use on which you may make use of our website http://www.drravibhaskar.com/ (our site), whether as a guest or a registered user. Please read these terms of use carefully before you start to use our site. By using our site, you indicate that you accept these terms of use and that you agree to abide by them. If you do not agree to these terms of use, please refrain from using our site.</string>
+
 </resources>

@@ -1,16 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".fragments.PrivacyAndPolicy">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_gravity="center"
-        android:gravity="center"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Privacy and Policy" />
+        android:scrollbars="none">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-</FrameLayout>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Privacy and Policy"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:textSize="20dp"
+                android:textColor="@android:color/holo_blue_dark"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="5dp">
+
+                <TextView
+                    android:padding="8dp"
+                    android:textColor="@color/black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:fontFamily="@font/poppins"
+                    android:layout_gravity="center"
+                    android:text="@string/policy"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1.INFORMATION WE MAY COLLECT FROM YOU"
+                android:layout_margin="10dp"
+                android:textSize="15dp"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2.IP ADDRESSES AND COOKIES"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textSize="15dp"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3.WHERE WE STORE YOUR PERSONAL DATA"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:textSize="15dp"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="4.USES MADE OF THE INFORMATION"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:textSize="15dp"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="5.DISCLOSURE OF YOUR INFORMATION"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:textSize="15dp"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="6.YOUR RIGHTS AND CONTACT"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:textSize="15dp"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="7.CHANGES TO OUR PRIVACY POLICY"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:textSize="15dp"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <com.skydoves.elasticviews.ElasticButton
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="right"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="10dp"
+                android:text="Read More"
+                android:textSize="12sp"
+                android:id="@+id/btn_readMore"
+                android:textColor="@android:color/white"
+                android:background="@drawable/btn_back"/>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
