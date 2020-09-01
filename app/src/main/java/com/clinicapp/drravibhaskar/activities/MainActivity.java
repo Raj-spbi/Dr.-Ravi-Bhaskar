@@ -1,4 +1,4 @@
-package com.clinicapp.drravibhaskar;
+package com.clinicapp.drravibhaskar.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -22,6 +22,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.clinicapp.drravibhaskar.R;
 import com.clinicapp.drravibhaskar.activities.LoginActivity;
 import com.clinicapp.drravibhaskar.activities.MessageActivity;
 import com.clinicapp.drravibhaskar.fragments.AboutUsFragment;

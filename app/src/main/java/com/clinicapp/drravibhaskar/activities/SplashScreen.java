@@ -9,7 +9,6 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
-import com.clinicapp.drravibhaskar.MainActivity;
 import com.clinicapp.drravibhaskar.R;
 
 public class SplashScreen extends AppCompatActivity {

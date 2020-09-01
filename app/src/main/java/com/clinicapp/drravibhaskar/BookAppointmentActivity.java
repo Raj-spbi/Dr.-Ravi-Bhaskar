@@ -18,8 +18,8 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.clinicapp.drravibhaskar.activities.MainActivity;
 import com.clinicapp.drravibhaskar.fragments.AfterNoon;
 import com.clinicapp.drravibhaskar.fragments.EveningFragment;
 import com.clinicapp.drravibhaskar.fragments.MorningFragment;
@@ -44,7 +44,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
         back_img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 finish();
             }
         });

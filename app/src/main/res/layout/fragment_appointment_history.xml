@@ -9,8 +9,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:padding="5dp"
         android:elevation="4dp"
+        android:layout_marginLeft="15dp"
         android:translationZ="6dp"
-        android:text="Appointment History"/>
+        android:text="My Appointment"/>
 <androidx.recyclerview.widget.RecyclerView
     android:layout_marginTop="8dp"
     android:layout_width="match_parent"
