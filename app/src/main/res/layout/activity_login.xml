@@ -1,6 +1,7 @@
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android" >
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/first"
@@ -15,6 +16,12 @@
             android:layout_height="60dp"
             android:background="@drawable/banner_logo" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:orientation="vertical">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -23,35 +30,47 @@
             android:layout_marginTop="30dp"
             android:fontFamily="@font/poppins_medium"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
-        <EditText
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
             android:layout_marginTop="20dp"
-            android:padding="10dp"
-            android:hint="User Name"
-            android:inputType="textEmailAddress"
-            android:background="@drawable/edittextback"
-            android:id="@+id/et_UserName"/>
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp">
 
-        <EditText
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="Enter Email"
+                android:inputType="textEmailAddress"
+                android:id="@+id/et_email"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
             android:layout_marginTop="20dp"
-            android:padding="10dp"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:background="@drawable/edittextback"
-            android:id="@+id/et_password"/>
+            android:layout_marginRight="15dp"
+            app:passwordToggleEnabled="true"
+            android:layout_marginLeft="15dp">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:hint="Enter Password"
+                android:inputType="textPassword"
+                android:id="@+id/et_password"
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
         <com.skydoves.elasticviews.ElasticButton
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="30dp"
             android:text="Login Now"
             android:background="@drawable/btn_back"
@@ -63,20 +82,20 @@
             android:layout_height="wrap_content"
             android:text="Forget Password"
             android:gravity="center"
-            android:textStyle="italic"
             android:fontFamily="@font/poppins_medium"
             android:layout_marginTop="10dp"
             android:textSize="15dp"
             android:clickable="true"
-            android:textColor="@android:color/black"
+            android:textColor="@color/black"
             android:id="@+id/txt_forgotPassword"/>
+    </LinearLayout>
     </LinearLayout>
 
     <com.skydoves.elasticviews.ElasticButton
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:text="Don't Have Account ?"
         android:textSize="12dp"
         android:background="@drawable/btn_bg"

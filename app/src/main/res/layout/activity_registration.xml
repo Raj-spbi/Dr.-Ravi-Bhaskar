@@ -7,6 +7,7 @@
     android:orientation="vertical"
     tools:context=".activities.RegistrationActivity">
 
+
     <LinearLayout
         android:layout_marginTop="6dp"
         android:layout_marginLeft="20dp"
@@ -14,65 +15,106 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@drawable/banner_logo" />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Register"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center"
+
+
+    <LinearLayout
         android:gravity="center"
-        android:fontFamily="@font/poppins_medium"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        />
-
-    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:layout_marginTop="-30dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="@font/poppins_medium"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            />
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
+        android:layout_marginTop="0dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="20dp"
-        android:padding="10dp"
-        android:hint="Enter Name"
-        android:inputType="text"
-        android:background="@drawable/edittextback"
-        android:id="@+id/et_name"/>
+        android:layout_marginLeft="15dp">
 
-    <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="Enter Name"
+            android:inputType="text"
+            android:id="@+id/et_name"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <!--    <EditText-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginLeft="15dp"-->
+    <!--        android:layout_marginRight="15dp"-->
+    <!--        android:layout_marginTop="20dp"-->
+    <!--        android:padding="10dp"-->
+    <!--        android:hint="Enter Name"-->
+    <!--        android:inputType="text"-->
+    <!--        android:background="@drawable/edittextback"-->
+    <!--        android:id="@+id/et_name"/>-->
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
-        android:padding="10dp"
-        android:hint="Enter Mobile Number"
-        android:inputType="phone"
-        android:background="@drawable/edittextback"
-        android:id="@+id/et_phone"/>
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp">
 
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="Enter Mobile Number"
+            android:inputType="phone"
+            android:id="@+id/et_phone"
+            />
 
-    <EditText
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
-        android:padding="10dp"
-        android:hint="Email Address"
-        android:inputType="textEmailAddress"
-        android:background="@drawable/edittextback"
-        android:id="@+id/et_email"/>
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp">
 
-    <EditText
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="Enter Email"
+            android:inputType="textEmailAddress"
+            android:id="@+id/et_email"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
         android:layout_marginTop="20dp"
-        android:padding="10dp"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:background="@drawable/edittextback"
-        android:id="@+id/et_pass"/>
+        android:layout_marginRight="15dp"
+        app:passwordToggleEnabled="true"
+        android:layout_marginLeft="15dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:hint="Enter Password"
+            android:inputType="textPassword"
+            android:id="@+id/et_password"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -80,7 +122,7 @@
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/edittextback">
+        >
 
         <Spinner
             android:layout_width="match_parent"
@@ -98,10 +140,10 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="30dp"
         android:text="Register Now"
-
         android:background="@drawable/btn_back"
-        android:textColor="@android:color/white"
+        android:textColor="@color/white"
         android:textAllCaps="false"
         android:id="@+id/btn_reg"/>
+</LinearLayout>
 
 </LinearLayout>

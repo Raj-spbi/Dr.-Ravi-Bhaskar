@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import com.clinicapp.drravibhaskar.BookAppointmentActivity;
 import com.clinicapp.drravibhaskar.R;
+import com.clinicapp.drravibhaskar.activities.AvailServiceActivity;
 import com.clinicapp.drravibhaskar.models.ModelCustomList1;
 import java.util.List;
 
@@ -57,7 +58,11 @@ public class AdapterCustomList1 extends BaseAdapter {
                     Intent intent = new Intent(context, BookAppointmentActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-                } else {
+                } else if (i==1){
+                    Intent intent = new Intent(context, AvailServiceActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }else {
                     Toast.makeText(context, "Available Soon", Toast.LENGTH_SHORT).show();
                 }
             }
