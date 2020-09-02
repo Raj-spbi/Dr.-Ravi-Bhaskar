@@ -17,5 +17,9 @@
             />
 <!--        app:titleTextColor="@color/buttoncolor"-->
     </com.google.android.material.appbar.AppBarLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/colorPrimary"/>
 
 </LinearLayout>
