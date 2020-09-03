@@ -63,8 +63,8 @@ public class HomeFragment extends Fragment {
         modelCustomList1s=new ArrayList<>();
         modelCustomList1s.add(new ModelCustomList1("Book Appointment",R.drawable.ic_baseline_date_range_24));
         modelCustomList1s.add(new ModelCustomList1("Avail Home Service",R.drawable.stethoscope_1));
-        modelCustomList1s.add(new ModelCustomList1("Buy / Rent Equipments",R.drawable.ic_outline_accessible_24));
-        modelCustomList1s.add(new ModelCustomList1("Shop Medicine",R.drawable.ic_outline_add_box_24));
+//        modelCustomList1s.add(new ModelCustomList1("Buy / Rent Equipments",R.drawable.ic_outline_accessible_24));
+//        modelCustomList1s.add(new ModelCustomList1("Shop Medicine",R.drawable.ic_outline_add_box_24));
         adapterCustomList1=new AdapterCustomList1(getContext(),modelCustomList1s);
         listView.setAdapter(adapterCustomList1);
         return view;
