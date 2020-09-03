@@ -1,6 +1,7 @@
 package com.clinicapp.drravibhaskar.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,9 +15,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.clinicapp.drravibhaskar.R;
+import com.clinicapp.drravibhaskar.activities.LoginActivity;
 import com.clinicapp.drravibhaskar.adapters.AdapterCustomList1;
+import com.clinicapp.drravibhaskar.apimodels.ModelUser;
+import com.clinicapp.drravibhaskar.managers.SharedPrefManagerAdmin;
 import com.clinicapp.drravibhaskar.models.ModelCustomList1;
 import com.clinicapp.drravibhaskar.models.ModelImageBannerItem;
 import com.google.android.material.tabs.TabLayout;
@@ -24,11 +29,6 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends Fragment {
 
     ListView listView;
@@ -37,6 +37,7 @@ public class HomeFragment extends Fragment {
 
     ViewPager viewPager;
     TabLayout tabLayout;
+    TextView username;
     MyCustomPagerAdaptor pagerAdaptor;
     ArrayList<ModelImageBannerItem> list;
 
@@ -50,9 +51,24 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view= inflater.inflate(R.layout.fragment_home, container, false);
         listView=view.findViewById(R.id.list1);
+        if (!SharedPrefManagerAdmin.getInstance(getContext()).isLoggedIn()) {
+            Intent intent=new Intent(getActivity(),LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
+        }
+        ModelUser user = SharedPrefManagerAdmin.getInstance(getContext()).getUser();
 
         viewPager=view.findViewById(R.id.viewPager);
         tabLayout=view.findViewById(R.id.tabview);
+        username=view.findViewById(R.id.username);
+        String Gender=user.getGender();
+        if (Gender.equals("Male")){
+            username.setText("Mr. "+user.getName())  ;
+        }else if (Gender.equals("Female")){
+            username.setText("Miss. "+user.getName())  ;
+        }else {
+            username.setText(user.getName())  ;
+        }
 
         addImages();
 
