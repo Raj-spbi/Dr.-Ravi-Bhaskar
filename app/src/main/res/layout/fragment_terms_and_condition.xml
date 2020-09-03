@@ -19,11 +19,15 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Term And Condition"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:textSize="26dp"
+                android:fontFamily="@font/abhaya_libre_semibold"
                 android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:textSize="20dp"
-                android:textColor="@android:color/holo_blue_dark"/>
+                android:text="Terms &amp; Conditions"
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textStyle="bold" />
+
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -37,89 +41,101 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
-                    android:fontFamily="@font/poppins"
+                    android:fontFamily="@font/lustria"
                     android:layout_gravity="center"
                     android:text="@string/term"/>
 
             </androidx.cardview.widget.CardView>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="10dp"
                 android:layout_height="wrap_content"
-                android:text="1.INFORMATION ABOUT US"
-                android:layout_margin="10dp"
-                android:textSize="15dp"
-                android:fontFamily="@font/poppins_medium"/>
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="2.ACCESSING OUR SITE"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:textSize="15dp"
-                android:fontFamily="@font/poppins_medium"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="1.INFORMATION ABOUT US"
+        android:layout_margin="10dp"
+        android:textSize="15dp"
+        android:fontFamily="@font/lustria"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="3.INTELLECTUAL PROPERTY RIGHTS"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15dp"
-                android:fontFamily="@font/poppins_medium"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="2.ACCESSING OUR SITE"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:textSize="15dp"
+        android:fontFamily="@font/lustria"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="4.USES MADE OF THE INFORMATION"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15dp"
-                android:fontFamily="@font/poppins_medium"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="3.INTELLECTUAL PROPERTY RIGHTS"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15dp"
+        android:fontFamily="@font/lustria"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="5.RELIANCE ON INFORMATION POSTED"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15dp"
-                android:fontFamily="@font/poppins_medium"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="4.USES MADE OF THE INFORMATION"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15dp"
+        android:fontFamily="@font/lustria"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="6.OUR SITE CHANGES REGULARLY"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15dp"
-                android:fontFamily="@font/poppins_medium"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="5.RELIANCE ON INFORMATION POSTED"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15dp"
+        android:fontFamily="@font/lustria"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="7.INFORMATION ABOUT YOU AND YOUR VISITS TO OUR SITE"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="5dp"
-                android:textSize="15dp"
-                android:fontFamily="@font/poppins_medium"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="6.OUR SITE CHANGES REGULARLY"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15dp"
+        android:fontFamily="@font/lustria"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="7.INFORMATION ABOUT YOU AND YOUR VISITS TO OUR SITE"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:textSize="15dp"
+        android:fontFamily="@font/lustria"/>
+</LinearLayout>
 
             <com.skydoves.elasticviews.ElasticButton
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="34dp"
                 android:layout_gravity="right"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="10dp"
                 android:text="Read More"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="12dp"
+                android:paddingRight="12dp"
                 android:textSize="12sp"
                 android:id="@+id/btn_readMore"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:background="@drawable/btn_back"/>
 
         </LinearLayout>

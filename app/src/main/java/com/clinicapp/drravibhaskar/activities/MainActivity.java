@@ -12,7 +12,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -26,8 +25,6 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.clinicapp.drravibhaskar.R;
-import com.clinicapp.drravibhaskar.activities.LoginActivity;
-import com.clinicapp.drravibhaskar.activities.MessageActivity;
 import com.clinicapp.drravibhaskar.apimodels.ModelUser;
 import com.clinicapp.drravibhaskar.fragments.AboutUsFragment;
 import com.clinicapp.drravibhaskar.fragments.AppointmentHistory;
@@ -35,7 +32,6 @@ import com.clinicapp.drravibhaskar.fragments.ChangePasswordFragment;
 import com.clinicapp.drravibhaskar.fragments.ContactUsFragment;
 import com.clinicapp.drravibhaskar.fragments.EveningFragment;
 import com.clinicapp.drravibhaskar.fragments.HomeFragment;
-import com.clinicapp.drravibhaskar.fragments.MorningFragment;
 import com.clinicapp.drravibhaskar.fragments.NotificationFragment;
 import com.clinicapp.drravibhaskar.fragments.PrivacyAndPolicy;
 import com.clinicapp.drravibhaskar.fragments.ProfileFragment;
@@ -307,11 +303,11 @@ public class MainActivity extends AppCompatActivity {
         Intent intent;
         switch (item.getItemId()) {
 
-            case R.id.message:
-//                Toast.makeText(this, "Messages", Toast.LENGTH_SHORT).show();
-                intent = new Intent(getApplicationContext(), MessageActivity.class);
-                startActivity(intent);
-                finish();
+            case R.id.settings:
+                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
+//                intent = new Intent(getApplicationContext(), MessageActivity.class);
+//                startActivity(intent);
+//                finish();
                 break;
 //            case R.id.donations:
 //                Toast.makeText(this, "Bookmarked", Toast.LENGTH_SHORT).show();

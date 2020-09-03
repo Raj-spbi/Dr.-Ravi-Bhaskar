@@ -20,6 +20,7 @@
             android:layout_height="?attr/actionBarSize"
             android:elevation="8dp"
             android:translationZ="8dp"
+            android:backgroundTint="@color/white"
             android:minHeight="?attr/actionBarSize">
         </androidx.appcompat.widget.Toolbar>
 

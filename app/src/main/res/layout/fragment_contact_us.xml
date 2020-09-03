@@ -159,7 +159,7 @@
                         android:layout_toRightOf="@id/email"
                         android:fontFamily="@font/abhaya_libre_semibold"
                         android:gravity="left"
-                        android:text="info@bhaskarchest.com"
+                        android:text="medbaylko@gmail.com"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                         android:textStyle="bold" />
                 </RelativeLayout>

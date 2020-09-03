@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.clinicapp.drravibhaskar.BottomSheetClass;
 import com.clinicapp.drravibhaskar.R;
@@ -22,6 +23,7 @@ public class ProfileFragment extends Fragment {
 
     ElasticButton editProfile;
 
+    TextView uname,umobile,uaddress,bloodgroup,patientId,uemail;
     public ProfileFragment() {
         // Required empty public constructor
     }
@@ -39,6 +41,17 @@ public class ProfileFragment extends Fragment {
             startActivity(intent);
         }
         ModelUser user = SharedPrefManagerAdmin.getInstance(getContext()).getUser();
+        uname=view.findViewById(R.id.uname);
+        umobile=view.findViewById(R.id.umobile);
+        uaddress=view.findViewById(R.id.uaddress);
+        bloodgroup=view.findViewById(R.id.bloodgroup);
+        patientId=view.findViewById(R.id.patientId);
+        uemail=view.findViewById(R.id.uemail);
+        uname.setText(user.getName());
+        umobile.setText(user.getContactNo());
+        uaddress.setText(user.getAddress1());
+        patientId.setText(user.getPatientID());
+        uemail.setText(user.getEmail());
 
         editProfile=view.findViewById(R.id.editProfile);
 
