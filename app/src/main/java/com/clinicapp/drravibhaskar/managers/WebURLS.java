@@ -1,7 +1,15 @@
 package com.clinicapp.drravibhaskar.managers;
 
 public class WebURLS {
-    private static final String ROOT_URL = "https://ashram.aaratechnologies.in/api/";
+    private static final String ROOT_URL = "https://api.drravibhaskar.com/api/User/";
+
+    public static final String USER_LIST=ROOT_URL+"UserList";
+
+    public static final String LOGIN=ROOT_URL+"UserLogin";
+    //method post parametetrs userid ,password
+            //https://api.drravibhaskar.com/api/User/UserLogin
+
+
 
 //    public static final String URL_ADMIN_LOGIN= ROOT_URL + "admin_login.php?apicall=login";
 //

@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.clinicapp.drravibhaskar.R;
+import com.clinicapp.drravibhaskar.managers.SharedPrefManagerAdmin;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -26,8 +27,17 @@ public class SplashScreen extends AppCompatActivity {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                finish();
+
+                if (SharedPrefManagerAdmin.getInstance(SplashScreen.this).isLoggedIn()) {
+                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }  else {
+                    Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+
             }
         },2000);
     }

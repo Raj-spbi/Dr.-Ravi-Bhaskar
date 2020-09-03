@@ -12,6 +12,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -20,11 +21,14 @@ import android.view.MenuItem;
 
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.clinicapp.drravibhaskar.R;
 import com.clinicapp.drravibhaskar.activities.LoginActivity;
 import com.clinicapp.drravibhaskar.activities.MessageActivity;
+import com.clinicapp.drravibhaskar.apimodels.ModelUser;
 import com.clinicapp.drravibhaskar.fragments.AboutUsFragment;
 import com.clinicapp.drravibhaskar.fragments.AppointmentHistory;
 import com.clinicapp.drravibhaskar.fragments.ChangePasswordFragment;
@@ -36,12 +40,19 @@ import com.clinicapp.drravibhaskar.fragments.NotificationFragment;
 import com.clinicapp.drravibhaskar.fragments.PrivacyAndPolicy;
 import com.clinicapp.drravibhaskar.fragments.ProfileFragment;
 import com.clinicapp.drravibhaskar.fragments.TermsAndCondition;
+import com.clinicapp.drravibhaskar.managers.SharedPrefManagerAdmin;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.skydoves.elasticviews.ElasticCardView;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class MainActivity extends AppCompatActivity {
     DrawerLayout drawer;
+
+    CircleImageView userimage;
+    TextView username,useremail,mobileNo;
+
 
     public static FragmentManager FRAGMENT_MANAGER = null;
     NavigationView navigationView;
@@ -53,12 +64,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         container = (RelativeLayout) findViewById(R.id.container);
+        if (!SharedPrefManagerAdmin.getInstance(this).isLoggedIn()) {
+            finish();
+            startActivity(new Intent(this, LoginActivity.class));
+        }
+        ModelUser user = SharedPrefManagerAdmin.getInstance(this).getUser();
 
+//        Toast.makeText(this, ""+user.getPatientID()+", "+user.getName()+","+user.getImages(), Toast.LENGTH_SHORT).show();
         FRAGMENT_MANAGER=getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction=FRAGMENT_MANAGER.beginTransaction();
         fragmentTransaction.replace(R.id.container,new HomeFragment());
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+
+
+        username=findViewById(R.id.username);
+        useremail=findViewById(R.id.useremail);
+        mobileNo=findViewById(R.id.mobileNo);
+        userimage=findViewById(R.id.userimage);
+
+        username.setText(user.getName());
+//        Toast.makeText(this, ""+user.getName(), Toast.LENGTH_SHORT).show();
+        useremail.setText(user.getEmail());
+        mobileNo.setText(user.getContactNo());
+        if (user.getImages().isEmpty()){
+            userimage.setImageResource(R.drawable.user_avtar);
+        }else {
+            Glide.with(getApplicationContext()).load(user.getImages()).placeholder(R.drawable.user_avtar).into(userimage);
+        }
+
+
+
         //Nav Menus
         home = findViewById(R.id.home);
         profile = findViewById(R.id.profile);
@@ -203,6 +239,7 @@ public class MainActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                SharedPrefManagerAdmin.getInstance(getApplicationContext()).logout();
                 Intent i=new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(i);
                 finish();
@@ -223,7 +260,8 @@ public class MainActivity extends AppCompatActivity {
                         FragmentManager fragmentManager1=getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction1=fragmentManager1.beginTransaction();
                         switch (item.getItemId()) {
-                            case R.id.appointments:
+                            case R
+                                    .id.appointments:
                                 fragmentTransaction1.replace(R.id.container,new AppointmentHistory());
 //                                Toast.makeText(MainActivity.this, "Feature", Toast.LENGTH_SHORT).show();
                                 break;
@@ -243,7 +281,6 @@ public class MainActivity extends AppCompatActivity {
                 });
 
     }
-
 
 
     public boolean isInternetConnected() {
