@@ -4,7 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:gravity="center"
@@ -13,28 +13,36 @@
         <ImageView
             android:layout_width="25dp"
             android:layout_height="25dp"
+            android:id="@+id/cross"
             android:src="@drawable/ic_baseline_close_24"
-            android:layout_marginLeft="12dp"/>
+            android:layout_margin="12dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Event"
-            android:textColor="@android:color/white"
+            android:layout_centerHorizontal="true"
+            android:padding="12dp"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
             android:textSize="14dp"
             android:fontFamily="@font/poppins_medium"
-            android:layout_marginLeft="10dp"/>
+            android:layout_marginLeft="30dp"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
             android:text="Save"
-            android:gravity="right"
-            android:textColor="@android:color/white"
+            android:id="@+id/save"
+            android:padding="12dp"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/white"
             android:textSize="14dp"
+
             android:fontFamily="@font/poppins_medium"
             android:layout_marginRight="10dp"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <EditText
         android:layout_width="match_parent"
@@ -64,12 +72,17 @@
         android:id="@+id/et_mobile"/>
 
     <Button
+        android:id="@+id/submit"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:layout_margin="20dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/btn_back"
         android:text="Submit"
         android:textAllCaps="false"
-        android:textColor="@android:color/white"/>
+        android:textSize="12dp"
+        android:layout_marginBottom="25dp"
+        android:textColor="@color/white"/>
 
 </LinearLayout>

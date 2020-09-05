@@ -23,7 +23,7 @@
         android:layout_gravity="center"
         android:orientation="vertical">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login Now"
             android:gravity="center"
@@ -51,7 +51,7 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
             app:passwordToggleEnabled="true"
             android:layout_marginLeft="15dp">
@@ -83,7 +83,8 @@
             android:text="Forget Password"
             android:gravity="center"
             android:fontFamily="@font/poppins_medium"
-            android:layout_marginTop="10dp"
+           android:padding="6dp"
+            android:layout_margin="5dp"
             android:textSize="15dp"
             android:clickable="true"
             android:textColor="@color/black"

@@ -50,10 +50,10 @@ public class AvailServiceActivity extends AppCompatActivity {
         });
 
         modelGrids=new ArrayList<>();
-        modelGrids.add(new ModelGrid(R.drawable.ic_baseline_exit_to_app_24,"Medicine\nDelivery"));
-        modelGrids.add(new ModelGrid(R.drawable.ic_baseline_date_range_24,"Nursing Care"));
-        modelGrids.add(new ModelGrid(R.drawable.ic_baseline_favorite_24,"Equipment Rental"));
-        modelGrids.add(new ModelGrid(R.drawable.ic_baseline_notifications_none_24,"Investigations"));
+        modelGrids.add(new ModelGrid(R.drawable.cart_ic,"Medicine\nDelivery"));
+        modelGrids.add(new ModelGrid(R.drawable.nursing_care_ic,"Nursing Care"));
+        modelGrids.add(new ModelGrid(R.drawable.equipmment_rental_ic,"Equipment Rental"));
+        modelGrids.add(new ModelGrid(R.drawable.consultation_ic,"Investigations"));
 
         adapterAvailService=new AdapterAvailService(getApplicationContext(),modelGrids);
         gridView.setAdapter(adapterAvailService);
@@ -92,13 +92,29 @@ public class AvailServiceActivity extends AppCompatActivity {
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "" + modelGrids.get(i).getName(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, "" + modelGrids.get(i).getName(), Toast.LENGTH_SHORT).show();
 
                     AlertDialog.Builder builder=new AlertDialog.Builder(AvailServiceActivity.this);
                     View view1=getLayoutInflater().inflate(R.layout.custom_alert_home_avail,null);
 
+                    ImageView cross=view1.findViewById(R.id.cross);
+                    TextView save=view1.findViewById(R.id.save);
+
                     builder.setView(view1);
-                    AlertDialog alertDialog=builder.create();
+                    final AlertDialog alertDialog=builder.create();
+                    cross.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                        }
+                    });
+                    save.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(AvailServiceActivity.this, "We'll Contact You As Soon As Possible", Toast.LENGTH_SHORT).show();
+                            alertDialog.dismiss();
+                        }
+                    });
                     alertDialog.show();
 
                 }
