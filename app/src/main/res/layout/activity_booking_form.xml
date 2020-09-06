@@ -1,8 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".activities.BookingFormActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            app:titleTextColor="@color/colorPrimary"
+            android:layout_height="?attr/actionBarSize"/>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Consultation Fees: 625 Rs"
+                android:gravity="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:fontFamily="@font/poppins_medium"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" On Sunday,06 Sep 2020"
+                    android:textSize="13sp"
+                    android:id="@+id/txt_date"
+                    android:fontFamily="@font/poppins"
+                    android:layout_marginLeft="10dp"
+                    android:drawableLeft="@drawable/ic_baseline_calendar_today_24"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" On 4:30 PM"
+                    android:textSize="13sp"
+                    android:id="@+id/txt_time"
+                    android:fontFamily="@font/poppins"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dp"
+                    android:drawableLeft="@drawable/ic_baseline_access_time_24"/>
+
+            </RelativeLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="Patient Name"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="7dp"
+                android:background="@drawable/edittextback"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="Phone"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins"
+                android:inputType="phone"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="7dp"
+                android:background="@drawable/edittextback"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="Email Id"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins"
+                android:inputType="textEmailAddress"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="7dp"
+                android:background="@drawable/edittextback"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittextback">
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:entries="@array/gender"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="7dp"/>
+
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="Age"
+                android:inputType="number"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="7dp"
+                android:background="@drawable/edittextback"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="Occupation"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins"
+                android:padding="10dp"
+                android:background="@drawable/edittextback"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="City"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingLeft="7dp"
+                android:background="@drawable/edittextback"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="Description"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins"
+                android:padding="10dp"
+                android:background="@drawable/edittextback"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittextback">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No File Choose"
+                    android:id="@+id/txt_fileName"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp"
+                    android:paddingLeft="7dp"
+                    android:textSize="13sp"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:background="@drawable/btn_back"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="9dp"
+                    android:layout_marginRight="10dp"
+                    android:text="Choose File"
+                    android:textSize="10dp"
+                    android:textColor="@android:color/white"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp">
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/radioGroup"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ONLINE PAY"
+                        android:id="@+id/rb_onlinePay"/>
+
+                    <RadioButton
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ONLINE PAY"
+                        android:id="@+id/rb_offlinePay"
+                        android:layout_marginLeft="50dp"/>
+
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <com.skydoves.elasticviews.ElasticButton
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/btn_back"
+                android:text="Pay Now"
+                android:textColor="@android:color/white"
+                android:textAllCaps="false"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

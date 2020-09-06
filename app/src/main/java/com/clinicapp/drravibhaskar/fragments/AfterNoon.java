@@ -2,6 +2,7 @@ package com.clinicapp.drravibhaskar.fragments;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.text.format.Time;
@@ -11,12 +12,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.DatePicker;
 import android.widget.GridView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
 import com.clinicapp.drravibhaskar.R;
+import com.clinicapp.drravibhaskar.activities.BookingFormActivity;
 import com.clinicapp.drravibhaskar.models.ModelForTimeSlots;
 
 import java.text.SimpleDateFormat;
@@ -127,12 +130,25 @@ public class AfterNoon extends Fragment {
         }
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
+        public View getView(final int i, View view, ViewGroup viewGroup) {
 
             view= LayoutInflater.from(context).inflate(R.layout.custom_layout_for_time_slot,viewGroup,false);
 
             TextView txt_timeSlot=view.findViewById(R.id.txt_timeSlot);
             txt_timeSlot.setText(gridItems.get(i).getTxt_timeName());
+
+            LinearLayout lin_container=view.findViewById(R.id.linear_container);
+            lin_container.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent=new Intent(getContext(), BookingFormActivity.class);
+                    intent.putExtra("date",dateset.getText().toString());
+                    intent.putExtra("time",gridItems.get(i).getTxt_timeName());
+                    startActivity(intent);
+
+                }
+            });
             return view;
         }
     }

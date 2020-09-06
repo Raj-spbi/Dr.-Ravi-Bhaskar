@@ -6,7 +6,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:background="@color/colorPrimary"
         android:orientation="horizontal">
         <ImageView
             android:id="@+id/back_img"
@@ -14,8 +13,7 @@
             android:layout_width="32dp"
             android:layout_marginLeft="15dp"
             android:layout_height="32dp"
-            android:src="@drawable/ic_baseline_arrow_back_24"
-            app:tint="@color/white" />
+            android:src="@drawable/ic_baseline_arrow_back_24"/>
             <RelativeLayout
                 android:layout_marginTop="2dp"
                 android:layout_width="match_parent"
@@ -28,7 +26,7 @@
                     android:layout_height="wrap_content"
                     android:text="Dr. Ravi Bhaskar"
                     android:gravity="center"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large"
                     />
                 <TextView
@@ -38,11 +36,10 @@
                     android:fontFamily="@font/poppins"
                     android:layout_marginTop="-10dp"
                     android:layout_below="@id/name"
-                    android:textColor="@color/white"
+                    android:textColor="@color/colorPrimaryDark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Book Appointment"
-                    />
+                    android:text="Book Appointment" />
             </RelativeLayout>
     </LinearLayout>
 
