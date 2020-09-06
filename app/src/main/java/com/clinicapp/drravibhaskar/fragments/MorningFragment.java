@@ -14,17 +14,27 @@ import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.clinicapp.drravibhaskar.R;
 import com.clinicapp.drravibhaskar.activities.BookingFormActivity;
+import com.clinicapp.drravibhaskar.managers.VolleySingleton;
+import com.clinicapp.drravibhaskar.managers.WebURLS;
 import com.clinicapp.drravibhaskar.models.ModelForTimeSlots;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MorningFragment extends Fragment {
@@ -39,7 +49,8 @@ public class MorningFragment extends Fragment {
     final Calendar[] calendar = new Calendar[1];
     CardView date;
     TextView dateset;
-    private int mYear, mMonth, mDay, mHour, mMinute;
+    String currentDate="";
+//    private int mYear, mMonth, mDay, mHour, mMinute;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,11 +60,12 @@ public class MorningFragment extends Fragment {
         dateset = view.findViewById(R.id.dateset);
         date = view.findViewById(R.id.date);
 
-
         Calendar calendar1 = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
-        String currentDate = dateFormat.format(calendar1.getTime());
+        currentDate = dateFormat.format(calendar1.getTime());
         dateset.setText(currentDate);
+        Toast.makeText(getContext(), ""+currentDate, Toast.LENGTH_SHORT).show();
+
 
         gridView = view.findViewById(R.id.gridTimeSlot);
         setData();
@@ -123,19 +135,30 @@ public class MorningFragment extends Fragment {
 
     private void setData() {
         items=new ArrayList<>();
-        items.add(new ModelForTimeSlots("9:30 AM"));
-        items.add(new ModelForTimeSlots("9:45 AM"));
-        items.add(new ModelForTimeSlots("10:00 AM"));
-        items.add(new ModelForTimeSlots("10:15 AM"));
-        items.add(new ModelForTimeSlots("10:30 AM"));
-        items.add(new ModelForTimeSlots("10:45 AM"));
-        items.add(new ModelForTimeSlots("11:00 AM"));
-        items.add(new ModelForTimeSlots("11:15 AM"));
-        items.add(new ModelForTimeSlots("11:30 AM"));
-        items.add(new ModelForTimeSlots("11:45 AM"));
-        items.add(new ModelForTimeSlots("12:00 PM"));
-        items.add(new ModelForTimeSlots("12:15 PM"));
-        items.add(new ModelForTimeSlots("12:30 PM"));
+//        items.add(new ModelForTimeSlots("9:30 AM"));
+
+        StringRequest stringRequest=new StringRequest(Request.Method.POST, WebURLS.AllDate, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getContext(), ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String>  map=new HashMap<>();
+                map.put("Date",currentDate);
+                map.put("Timing","Evening");
+                return map;
+            }
+        };
+
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
     private class GridAdaptor extends BaseAdapter {

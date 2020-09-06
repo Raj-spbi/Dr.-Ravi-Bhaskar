@@ -6,6 +6,7 @@ public class WebURLS {
     public static final String USER_LIST=ROOT_URL+"UserList";
 
     public static final String LOGIN=ROOT_URL+"UserLogin";
+    public static final String AllDate=ROOT_URL+"TimeSlot";
     //method post parametetrs userid ,password
             //https://api.drravibhaskar.com/api/User/UserLogin
 
