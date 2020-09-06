@@ -1,11 +1,5 @@
 package com.clinicapp.drravibhaskar.activities;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
-
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +11,11 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 
 import com.clinicapp.drravibhaskar.R;
 import com.clinicapp.drravibhaskar.models.ModelGrid;
@@ -49,15 +48,23 @@ public class AvailServiceActivity extends AppCompatActivity {
             }
         });
 
-        modelGrids=new ArrayList<>();
-        modelGrids.add(new ModelGrid(R.drawable.cart_ic,"Medicine\nDelivery"));
-        modelGrids.add(new ModelGrid(R.drawable.nursing_care_ic,"Nursing Care"));
-        modelGrids.add(new ModelGrid(R.drawable.equipmment_rental_ic,"Equipment Rental"));
-        modelGrids.add(new ModelGrid(R.drawable.consultation_ic,"Investigations"));
+        modelGrids = new ArrayList<>();
+        modelGrids.add(new ModelGrid(R.drawable.cart_ic, "Medicine\nDelivery"));
+        modelGrids.add(new ModelGrid(R.drawable.nursing_care_ic, "Nursing Care"));
+        modelGrids.add(new ModelGrid(R.drawable.equipmment_rental_ic, "Equipment Rental"));
+        modelGrids.add(new ModelGrid(R.drawable.consultation_ic, "Investigations"));
 
-        adapterAvailService=new AdapterAvailService(getApplicationContext(),modelGrids);
+        adapterAvailService = new AdapterAvailService(getApplicationContext(), modelGrids);
         gridView.setAdapter(adapterAvailService);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
     public class AdapterAvailService extends BaseAdapter {
         Context context;
         List<ModelGrid> modelGrids;
@@ -66,6 +73,7 @@ public class AvailServiceActivity extends AppCompatActivity {
             this.context = context;
             this.modelGrids = modelGrids;
         }
+
         @Override
         public int getCount() {
             return modelGrids.size();

@@ -1,27 +1,41 @@
 package com.clinicapp.drravibhaskar.fragments;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
+import android.text.format.DateFormat;
+import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.DatePicker;
 import android.widget.GridView;
 import android.widget.TextView;
+
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 
 import com.clinicapp.drravibhaskar.R;
 import com.clinicapp.drravibhaskar.models.ModelForTimeSlots;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 
 public class AfterNoon extends Fragment {
     GridView gridView;
     GridAdaptor gridAdaptor;
     ArrayList<ModelForTimeSlots> items;
+
+    final DatePickerDialog[] datePickerDialog = new DatePickerDialog[1];
+    final int[] year = new int[1];
+    final int[] month = new int[1];
+    final int[] dayOfMonth = new int[1];
+    final Calendar[] calendar = new Calendar[1];
+    CardView date;
+    TextView dateset;
 
     public AfterNoon() {
         // Required empty public constructor
@@ -31,12 +45,43 @@ public class AfterNoon extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view= inflater.inflate(R.layout.fragment_after_noon, container, false);
-        gridView=view.findViewById(R.id.gridTimeSlot);
+        View view = inflater.inflate(R.layout.fragment_after_noon, container, false);
+        gridView = view.findViewById(R.id.gridTimeSlot);
         setData();
-        gridAdaptor=new GridAdaptor(getContext(),items);
+        gridAdaptor = new GridAdaptor(getContext(), items);
         gridView.setAdapter(gridAdaptor);
+        dateset = view.findViewById(R.id.dateset);
+        date = view.findViewById(R.id.date);
 
+        Calendar calendar1 = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+        String currentDate = dateFormat.format(calendar1.getTime());
+        dateset.setText(currentDate);
+
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                calendar[0] = Calendar.getInstance();
+                year[0] = calendar[0].get(Calendar.YEAR);
+                month[0] = calendar[0].get(Calendar.MONTH);
+                dayOfMonth[0] = calendar[0].get(Calendar.DAY_OF_MONTH);
+                datePickerDialog[0] = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        CharSequence strDate = null;
+                        Time chosenDate = new Time();
+                        chosenDate.set(dayOfMonth, month, year);
+                        long dtDob = chosenDate.toMillis(true);
+                        strDate = DateFormat.format("EEEE, dd MMMM yyyy", dtDob);
+                        dateset.setText(strDate);
+//                                dateset.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                    }
+                }, year[0], month[0], dayOfMonth[0]);
+                datePickerDialog[0].getDatePicker().setMinDate(System.currentTimeMillis());
+                datePickerDialog[0].show();
+            }
+        });
         return view;
     }
 

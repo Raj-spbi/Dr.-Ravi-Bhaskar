@@ -6,6 +6,34 @@
     android:orientation="vertical"
     tools:context=".fragments.MorningFragment">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:paddingLeft="20dp"
+                android:src="@drawable/planner" />
+
+            <TextView
+                android:id="@+id/dateset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Friday, 26 November, 2020" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
