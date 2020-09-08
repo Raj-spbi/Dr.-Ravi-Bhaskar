@@ -30,10 +30,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLSession;
 
-import okhttp3.OkHttpClient;
 
 public class LoginActivity extends AppCompatActivity {
 
