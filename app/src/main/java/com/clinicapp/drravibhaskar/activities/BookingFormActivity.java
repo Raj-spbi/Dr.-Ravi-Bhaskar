@@ -55,7 +55,4 @@ public class BookingFormActivity extends AppCompatActivity {
 
     }
 
-
-
-
 }
