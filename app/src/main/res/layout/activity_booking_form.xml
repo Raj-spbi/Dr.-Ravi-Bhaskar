@@ -68,6 +68,7 @@
             </RelativeLayout>
 
             <EditText
+                android:id="@+id/patientName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -82,6 +83,7 @@
                 android:background="@drawable/edittextback"/>
 
             <EditText
+                android:id="@+id/patientContact"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -97,6 +99,7 @@
                 android:background="@drawable/edittextback"/>
 
             <EditText
+                android:id="@+id/patientEmailId"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -120,6 +123,7 @@
                 android:background="@drawable/edittextback">
 
                 <Spinner
+                    android:id="@+id/gender"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:entries="@array/gender"
@@ -130,6 +134,7 @@
             </LinearLayout>
 
             <EditText
+                android:id="@+id/patientAge"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -145,6 +150,7 @@
                 android:background="@drawable/edittextback"/>
 
             <EditText
+                android:id="@+id/patientOccupation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -157,6 +163,7 @@
                 android:background="@drawable/edittextback"/>
 
             <EditText
+                android:id="@+id/patienCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -171,6 +178,7 @@
                 android:background="@drawable/edittextback"/>
 
             <EditText
+                android:id="@+id/patientDesc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
@@ -191,16 +199,19 @@
                 android:background="@drawable/edittextback">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="No File Choose"
                     android:id="@+id/txt_fileName"
+                    android:layout_marginRight="10dp"
+                    android:layout_toLeftOf="@id/openGallery"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:paddingLeft="7dp"
-                    android:textSize="13sp"/>
+                    android:textSize="13sp" />
 
                 <Button
+                    android:id="@+id/openGallery"
                     android:layout_width="wrap_content"
                     android:layout_height="25dp"
                     android:background="@drawable/btn_back"
@@ -209,50 +220,49 @@
                     android:layout_marginRight="10dp"
                     android:text="Choose File"
                     android:textSize="10dp"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white" />
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp">
+            <!--            <RelativeLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginRight="10dp"-->
+            <!--                android:layout_marginLeft="10dp"-->
+            <!--                android:layout_marginTop="10dp">-->
 
-                <RadioGroup
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/radioGroup"
-                    android:orientation="horizontal">
+            <!--                <RadioGroup-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:id="@+id/radioGroup"-->
+            <!--                    android:orientation="horizontal">-->
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="ONLINE PAY"
-                        android:id="@+id/rb_onlinePay"/>
+            <!--                    <RadioButton-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="ONLINE PAY"-->
+            <!--                        android:id="@+id/rb_onlinePay"/>-->
 
-                    <RadioButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="ONLINE PAY"
-                        android:id="@+id/rb_offlinePay"
-                        android:layout_marginLeft="50dp"/>
+            <!--                    <RadioButton-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:text="ONLINE PAY"-->
+            <!--                        android:id="@+id/rb_offlinePay"-->
+            <!--                        android:layout_marginLeft="50dp"/>-->
 
-                </RadioGroup>
+            <!--                </RadioGroup>-->
 
-            </RelativeLayout>
+            <!--            </RelativeLayout>-->
 
             <com.skydoves.elasticviews.ElasticButton
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_margin="20dp"
+                android:id="@+id/submit"
                 android:background="@drawable/btn_back"
-                android:text="Pay Now"
+                android:text="Submit"
                 android:textColor="@android:color/white"
                 android:textAllCaps="false"/>
-
-
 
         </LinearLayout>
     </ScrollView>

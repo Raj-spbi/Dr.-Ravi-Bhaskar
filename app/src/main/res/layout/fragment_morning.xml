@@ -43,8 +43,24 @@
 
     <GridView
         android:id="@+id/gridTimeSlot"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:numColumns="3" />
+
+    <LinearLayout
+        android:id="@+id/cover"
+        android:layout_width="match_parent"
+
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/no_slot" />
+    </LinearLayout>
 </LinearLayout>
