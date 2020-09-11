@@ -89,14 +89,11 @@ public class EveningFragment extends Fragment {
         currentDate = dateFormat.format(calendar1.getTime());
         items = new ArrayList<>();
         dateset.setText(currentDate);
-//        Toast.makeText(getContext(), ""+currentDate, Toast.LENGTH_SHORT).show();
-
 
         gridView = view.findViewById(R.id.gridTimeSlot);
         setData(currentDate);
         gridAdaptor = new GridAdaptor(getContext(), items);
         gridView.setAdapter(gridAdaptor);
-
 
         date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +113,6 @@ public class EveningFragment extends Fragment {
                         strDate = DateFormat.format("EEEE, dd MMMM yyyy", dtDob);
                         dateset.setText(strDate);
                         currentDate = String.valueOf(strDate);
-
 
                         setData(currentDate);
 //                                dateset.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
