@@ -218,7 +218,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="9dp"
                     android:layout_marginRight="10dp"
-                    android:text="Choose File"
+                    android:text="Browse"
                     android:textSize="10dp"
                     android:textColor="@android:color/white" />
 

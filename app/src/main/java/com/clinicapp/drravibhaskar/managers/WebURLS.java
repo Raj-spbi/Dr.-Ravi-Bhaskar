@@ -8,6 +8,10 @@ public class WebURLS {
     public static final String LOGIN=ROOT_URL+"UserLogin";
     public static final String AllDate = ROOT_URL + "TimeSlot";
     public static final String ConfirmAppointment = ROOT_URL + "ConfirmAppoiment";
+
+    public static final String BOOKING_APPOINTMENT=ROOT_URL+"ConfirmAppoiment";
+    //Parameter Post
+
     //method post parametetrs userid ,password
             //https://api.drravibhaskar.com/api/User/UserLogin
 
