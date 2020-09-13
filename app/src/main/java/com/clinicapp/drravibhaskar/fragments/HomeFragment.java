@@ -114,13 +114,10 @@ public class HomeFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
                 default:
                     mDemoSlider.setPresetTransformer("Default");
                     break;
-
-
             }
         }
 //        mDemoSlider.setPresetTransformer("FlipHorizontal");
         mDemoSlider.addOnPageChangeListener(this);
-
 
         if (!SharedPrefManagerAdmin.getInstance(getContext()).isLoggedIn()) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);

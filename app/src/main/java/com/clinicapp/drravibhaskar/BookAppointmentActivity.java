@@ -14,7 +14,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.clinicapp.drravibhaskar.activities.MainActivity;
-import com.clinicapp.drravibhaskar.fragments.AfterNoon;
 import com.clinicapp.drravibhaskar.fragments.EveningFragment;
 import com.clinicapp.drravibhaskar.fragments.MorningFragment;
 import com.google.android.material.tabs.TabLayout;
@@ -46,7 +45,7 @@ public class BookAppointmentActivity extends AppCompatActivity {
         ViewPager viewPager=findViewById(R.id.view_pager);
         ViewPagerAdapter viewPagerAdapter=new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFragment(new MorningFragment(),"Morning");
-        viewPagerAdapter.addFragment(new AfterNoon(),"After Noon");
+//        viewPagerAdapter.addFragment(new AfterNoon(),"After Noon");
         viewPagerAdapter.addFragment(new EveningFragment(),"Evening");
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

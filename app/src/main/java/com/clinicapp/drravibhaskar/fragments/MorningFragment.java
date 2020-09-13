@@ -1,9 +1,10 @@
 package com.clinicapp.drravibhaskar.fragments;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -38,8 +39,6 @@ import com.clinicapp.drravibhaskar.activities.BookingFormActivity;
 import com.clinicapp.drravibhaskar.apimodels.ModelSlots;
 import com.clinicapp.drravibhaskar.managers.VolleySingleton;
 import com.clinicapp.drravibhaskar.managers.WebURLS;
-import com.clinicapp.drravibhaskar.models.ModelForTimeSlots;
-
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONArray;
@@ -47,7 +46,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.IOException;
 import java.net.ConnectException;
 import java.net.MalformedURLException;
 import java.net.SocketException;
@@ -71,26 +69,29 @@ public class MorningFragment extends Fragment {
     final Calendar[] calendar = new Calendar[1];
     CardView date;
     TextView dateset;
-    String currentDate="";
-    String SlotId="",Date="",Slot="",Timing="",status="",IsActive="";
-//    private int mYear, mMonth, mDay, mHour, mMinute;
+    String currentDate = "";
+    LinearLayout cover;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_morning, container, false);
         dateset = view.findViewById(R.id.dateset);
         date = view.findViewById(R.id.date);
-
+        cover = view.findViewById(R.id.cover);
+        cover.setVisibility(View.GONE);
         Calendar calendar1 = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
         currentDate = dateFormat.format(calendar1.getTime());
+        items = new ArrayList<>();
         dateset.setText(currentDate);
-        Toast.makeText(getContext(), ""+currentDate, Toast.LENGTH_SHORT).show();
+
+
         gridView = view.findViewById(R.id.gridTimeSlot);
         setData(currentDate);
-
+        gridAdaptor = new GridAdaptor(getContext(), items);
+        gridView.setAdapter(gridAdaptor);
 
 
         date.setOnClickListener(new View.OnClickListener() {
@@ -109,8 +110,10 @@ public class MorningFragment extends Fragment {
                         chosenDate.set(dayOfMonth, month, year);
                         long dtDob = chosenDate.toMillis(true);
                         strDate = DateFormat.format("EEEE, dd MMMM yyyy", dtDob);
-                        currentDate= String.valueOf(strDate);
-                        dateset.setText(currentDate);
+                        dateset.setText(strDate);
+                        currentDate = String.valueOf(strDate);
+
+
                         setData(currentDate);
 //                                dateset.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                     }
@@ -124,43 +127,88 @@ public class MorningFragment extends Fragment {
     }
 
     private void setData(final String currentDate) {
-        items=new ArrayList<>();
-        StringRequest stringRequest=new StringRequest(Request.Method.POST, WebURLS.AllDate, new Response.Listener<String>() {
+
+        items.clear();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, WebURLS.AllDate, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("result", "Morning Slot Response is: "+response);
-                Toast.makeText(getContext(), "Response: "+response, Toast.LENGTH_SHORT).show();
-                try {
-                    JSONArray jsonArray=new JSONArray(response);
-                    for (int i=0;i<jsonArray.length();i++){
-                        JSONObject jsonObject=jsonArray.getJSONObject(i);
-                        SlotId=jsonObject.getString("SlotId");
-                        Date=jsonObject.getString("Date");
-                        Slot=jsonObject.getString("Slot");
-                        Timing=jsonObject.getString("Timing");
-                        status=jsonObject.getString("status");
-                        IsActive=jsonObject.getString("IsActive");
+                Log.d("status", "onResponse: " + response);
+//                    Toast.makeText(getContext(), ""+currentDate+" "+response, Toast.LENGTH_SHORT).show();
 
-                        items.add(new ModelSlots(SlotId,Date,Slot,Timing,status,IsActive));
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String message = jsonObject.getString("Error");
+                    Toast.makeText(getContext(), "" + message, Toast.LENGTH_SHORT).show();
+                    if (message.equalsIgnoreCase("success")) {
+                        JSONArray jsonArray = jsonObject.getJSONArray("ResultRows");
+                        for (int j = 0; j < jsonArray.length(); j++) {
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(j);
+
+                            items.add(new ModelSlots(jsonObject1.getString("SlotId"), jsonObject1.getString("Date"),
+                                    jsonObject1.getString("Slot"), jsonObject1.getString("Timing"), jsonObject1.getString("status"),
+                                    jsonObject1.getString("IsActive")));
+                        }
+                        gridAdaptor = new GridAdaptor(getContext(), items);
+                        gridView.setAdapter(gridAdaptor);
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Alert !");
+                        builder.setMessage(message);
+                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+
+                                dialogInterface.dismiss();
+                                //ntd
+                            }
+                        });
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                gridAdaptor=new GridAdaptor(getActivity(),items);
+
+
+                //                try {
+////                    JSONArray jsonArray=new JSONArray(response);
+//
+//
+////                    for (int i=0;i<jsonArray.length();i++) {
+////
+////                        JSONObject jsonObject = jsonArray.getJSONObject(i);
+////
+////                        if (jsonObject.equals("Message")) {
+////                            Toast.makeText(getContext(), ""+jsonObject.getString("Message"), Toast.LENGTH_SHORT).show();
+////                        } else {
+////                            //
+//////                        ModelSlots modelSlots=new ModelSlots(jsonObject.getString("SlotId"),jsonObject.getString("Date"),
+//////                                jsonObject.getString("Slot"),jsonObject.getString("Timing"),jsonObject.getString("status"),
+//////                                jsonObject.getString("IsActive"));
+////
+////                            items.add(new ModelSlots(jsonObject.getString("SlotId"), jsonObject.getString("Date"),
+////                                    jsonObject.getString("Slot"), jsonObject.getString("Timing"), jsonObject.getString("status"),
+////                                    jsonObject.getString("IsActive")));
+////                        }
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+                gridAdaptor = new GridAdaptor(getActivity(), items);
                 gridView.setAdapter(gridAdaptor);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getContext(), "Error: "+error.getMessage(), Toast.LENGTH_SHORT).show();
-                if(error instanceof NoConnectionError){
-                    ConnectivityManager cm = (ConnectivityManager)getActivity()
+                if (error instanceof NoConnectionError) {
+                    ConnectivityManager cm = (ConnectivityManager) getActivity()
                             .getSystemService(Context.CONNECTIVITY_SERVICE);
                     NetworkInfo activeNetwork = null;
                     if (cm != null) {
                         activeNetwork = cm.getActiveNetworkInfo();
                     }
-                    if(activeNetwork != null && activeNetwork.isConnectedOrConnecting()){
+                    if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
                         Toast.makeText(getActivity(), "Server is not connected to internet.",
                                 Toast.LENGTH_SHORT).show();
                     } else {
@@ -168,24 +216,25 @@ public class MorningFragment extends Fragment {
                                 Toast.LENGTH_SHORT).show();
                     }
                 } else if (error instanceof NetworkError || error.getCause() instanceof ConnectException
-                        && error.getCause().getMessage().contains("connection")){
+                        || (error.getCause().getMessage() != null
+                        && error.getCause().getMessage().contains("connection"))) {
                     Toast.makeText(getActivity(), "Your device is not connected to internet.",
                             Toast.LENGTH_SHORT).show();
-                } else if (error.getCause() instanceof MalformedURLException){
+                } else if (error.getCause() instanceof MalformedURLException) {
                     Toast.makeText(getActivity(), "Bad Request.", Toast.LENGTH_SHORT).show();
                 } else if (error instanceof ParseError || error.getCause() instanceof IllegalStateException
                         || error.getCause() instanceof JSONException
-                        || error.getCause() instanceof XmlPullParserException){
+                        || error.getCause() instanceof XmlPullParserException) {
                     Toast.makeText(getActivity(), "Parse Error (because of invalid json or xml).",
                             Toast.LENGTH_SHORT).show();
-                } else if (error.getCause() instanceof OutOfMemoryError){
+                } else if (error.getCause() instanceof OutOfMemoryError) {
                     Toast.makeText(getActivity(), "Out Of Memory Error.", Toast.LENGTH_SHORT).show();
-                }else if (error instanceof AuthFailureError){
+                } else if (error instanceof AuthFailureError) {
                     Toast.makeText(getActivity(), "server couldn't find the authenticated request.",
                             Toast.LENGTH_SHORT).show();
                 } else if (error instanceof ServerError || error.getCause() instanceof ServerError) {
                     Toast.makeText(getActivity(), "Server is not responding.", Toast.LENGTH_SHORT).show();
-                }else if (error instanceof TimeoutError || error.getCause() instanceof SocketTimeoutException
+                } else if (error instanceof TimeoutError || error.getCause() instanceof SocketTimeoutException
                         || error.getCause() instanceof ConnectTimeoutException
                         || error.getCause() instanceof SocketException
                         || (error.getCause().getMessage() != null
@@ -202,8 +251,8 @@ public class MorningFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String>  map=new HashMap<>();
-                map.put("Date",currentDate);
-                map.put("Timing","Morning");
+                map.put("Date", currentDate);
+                map.put("Timing", "Morning");
                 return map;
             }
         };
@@ -239,34 +288,59 @@ public class MorningFragment extends Fragment {
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
 
-            view= LayoutInflater.from(context).inflate(R.layout.custom_layout_for_time_slot,viewGroup,false);
-            LinearLayout lin_container=view.findViewById(R.id.linear_container);
-            final TextView txt_timeSlot=view.findViewById(R.id.txt_timeSlot);
+            view = LayoutInflater.from(context).inflate(R.layout.custom_layout_for_time_slot, viewGroup, false);
 
+            final TextView txt_timeSlot = view.findViewById(R.id.txt_timeSlot);
+            LinearLayout lin_container = view.findViewById(R.id.linear_container);
+            String status = gridItems.get(i).getStatus();
+            Log.d("status", "Status is: " + status);
+            if (status.equalsIgnoreCase("Time Out")) {
+                txt_timeSlot.setText(gridItems.get(i).getTiming());
+                txt_timeSlot.setBackgroundColor(getResources().getColor(R.color.pink));
+                lin_container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getContext(), "Sorry Slot Time is Out", Toast.LENGTH_SHORT).show();
+                    }
+                });
 
-            if (gridItems.get(i).getStatus().equals("Time Out")){
-               lin_container.setBackgroundColor(Color.CYAN);
+            } else if (status.equalsIgnoreCase("Available")) {
                 txt_timeSlot.setText(gridItems.get(i).getTiming());
-            } else if (gridItems.get(i).getStatus().equals("Booked")){
-                lin_container.setBackgroundColor(Color.GREEN);
+                txt_timeSlot.setBackgroundColor(getResources().getColor(R.color.green));
+                lin_container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent = new Intent(getContext(), BookingFormActivity.class);
+                        intent.putExtra("date", dateset.getText().toString());
+                        intent.putExtra("time", gridItems.get(i).getTiming());
+                        startActivity(intent);
+
+                    }
+                });
+
+            } else if (status.equalsIgnoreCase("Block")) {
                 txt_timeSlot.setText(gridItems.get(i).getTiming());
-            } else if(gridItems.get(i).getStatus().equals("Block")){
-                lin_container.setBackgroundColor(Color.RED);
+                txt_timeSlot.setBackgroundColor(getResources().getColor(R.color.red));
+                lin_container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getContext(), "Slot is Blocked", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
                 txt_timeSlot.setText(gridItems.get(i).getTiming());
-            }else{
-                txt_timeSlot.setText(gridItems.get(i).getTiming());
+                txt_timeSlot.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+                lin_container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getContext(), "Already Booked", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
             }
 
-            lin_container.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
 
-                    Intent intent=new Intent(getContext(), BookingFormActivity.class);
-                    intent.putExtra("date",dateset.getText().toString());
-                    intent.putExtra("time",gridItems.get(i).getTiming());
-                    startActivity(intent);
-                }
-            });
             return view;
         }
     }
