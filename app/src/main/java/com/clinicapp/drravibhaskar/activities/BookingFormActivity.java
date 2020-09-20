@@ -100,8 +100,8 @@ public class BookingFormActivity extends AppCompatActivity {
 
         txt_date=(TextView)findViewById(R.id.txt_date);
         txt_time=(TextView)findViewById(R.id.txt_time);
-        txt_fileName = findViewById(R.id.txt_fileName);
-        openGallery = findViewById(R.id.openGallery);
+        //txt_fileName = findViewById(R.id.txt_fileName);
+        //openGallery = findViewById(R.id.openGallery);
         submit = findViewById(R.id.submit);
         patientName = findViewById(R.id.patientName);
         gender=findViewById(R.id.gender);
@@ -198,9 +198,9 @@ public class BookingFormActivity extends AppCompatActivity {
             patientDesc.requestFocus();
             return;
         }
-        else if (bitmap==null){
-            Toast.makeText(this, "Choose Your Profile", Toast.LENGTH_SHORT).show();
-        }
+//        else if (bitmap==null){
+//            Toast.makeText(this, "Choose Your Profile", Toast.LENGTH_SHORT).show();
+//        }
         else {
             StringRequest stringRequest=new StringRequest(Request.Method.POST, WebURLS.BOOKING_APPOINTMENT, new Response.Listener<String>() {
                 @Override

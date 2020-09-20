@@ -14,33 +14,38 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:id="@+id/cross"
+            android:layout_alignParentLeft="true"
             android:src="@drawable/ic_baseline_close_24"
             android:layout_margin="12dp"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="New Event"
-            android:layout_centerHorizontal="true"
+            android:layout_toRightOf="@id/cross"
             android:padding="12dp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/txt_event"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:layout_gravity="center"
+            android:gravity="center"
             android:textColor="@color/white"
             android:textSize="14dp"
-            android:fontFamily="@font/poppins_medium"
-            android:layout_marginLeft="30dp"/>
+            android:fontFamily="@font/poppins_medium"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="Save"
-            android:id="@+id/save"
-            android:padding="12dp"
-            android:layout_alignParentRight="true"
-            android:textColor="@color/white"
-            android:textSize="14dp"
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_centerHorizontal="true"-->
+<!--            android:text="Save"-->
+<!--            android:id="@+id/save"-->
+<!--            android:padding="12dp"-->
+<!--            android:layout_alignParentRight="true"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="14dp"-->
 
-            android:fontFamily="@font/poppins_medium"
-            android:layout_marginRight="10dp"/>
+<!--            android:fontFamily="@font/poppins_medium"-->
+<!--            android:layout_marginRight="10dp"/>-->
 
     </RelativeLayout>
 
@@ -68,8 +73,20 @@
         android:hint="Enter Mobile Number"
         android:layout_margin="10dp"
         android:padding="10dp"
+        android:maxLength="10"
+        android:inputType="phone"
         android:textSize="13dp"
         android:id="@+id/et_mobile"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Email ID"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:inputType="textEmailAddress"
+        android:textSize="13dp"
+        android:id="@+id/et_email"/>
 
     <Button
         android:id="@+id/submit"

@@ -10,6 +10,8 @@ public class WebURLS {
     public static final String ConfirmAppointment = ROOT_URL + "ConfirmAppoiment";
 
     public static final String BOOKING_APPOINTMENT=ROOT_URL+"ConfirmAppoiment";
+
+    public static final String HOME_SERVICES=ROOT_URL+"HomeAvailService";
     //Parameter Post
 
     //method post parametetrs userid ,password

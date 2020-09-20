@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -17,17 +19,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.clinicapp.drravibhaskar.R;
+import com.clinicapp.drravibhaskar.apimodels.ModelUser;
+import com.clinicapp.drravibhaskar.managers.SharedPrefManagerAdmin;
+import com.clinicapp.drravibhaskar.managers.VolleySingleton;
+import com.clinicapp.drravibhaskar.managers.WebURLS;
 import com.clinicapp.drravibhaskar.models.ModelGrid;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AvailServiceActivity extends AppCompatActivity {
 
     GridView gridView;
     List<ModelGrid> modelGrids;
     AdapterAvailService adapterAvailService;
+
+    String pId="";
+    String emailId="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +72,10 @@ public class AvailServiceActivity extends AppCompatActivity {
 
         adapterAvailService = new AdapterAvailService(getApplicationContext(), modelGrids);
         gridView.setAdapter(adapterAvailService);
+
+        ModelUser user = SharedPrefManagerAdmin.getInstance(AvailServiceActivity.this).getUser();
+        pId=user.getPatientID();
+        Toast.makeText(this, ""+pId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -91,8 +111,10 @@ public class AvailServiceActivity extends AppCompatActivity {
 
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
+
+
             view = LayoutInflater.from(context).inflate(R.layout.custom_home_avail_layout, viewGroup, false);
-            TextView textView = view.findViewById(R.id.title);
+            final TextView textView = view.findViewById(R.id.title);
             ImageView image = view.findViewById(R.id.image);
             textView.setText(modelGrids.get(i).getName());
             image.setImageResource(modelGrids.get(i).getImageRes());
@@ -106,21 +128,83 @@ public class AvailServiceActivity extends AppCompatActivity {
                     View view1=getLayoutInflater().inflate(R.layout.custom_alert_home_avail,null);
 
                     ImageView cross=view1.findViewById(R.id.cross);
+                    final EditText et_name=view1.findViewById(R.id.et_name);
+                    final EditText et_address=view1.findViewById(R.id.et_address);
+                    final EditText et_mobile=view1.findViewById(R.id.et_mobile);
+                    final EditText et_email=view1.findViewById(R.id.et_email);
+                    Button submit=view1.findViewById(R.id.submit);
                     TextView save=view1.findViewById(R.id.save);
+                    TextView event=view1.findViewById(R.id.txt_event);
+                    final String gridName=modelGrids.get(i).getName();
+                    event.setText(gridName);
 
                     builder.setView(view1);
                     final AlertDialog alertDialog=builder.create();
+                    alertDialog.setCancelable(false);
                     cross.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             alertDialog.dismiss();
                         }
                     });
-                    save.setOnClickListener(new View.OnClickListener() {
+
+                    submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(AvailServiceActivity.this, "We'll Contact You As Soon As Possible", Toast.LENGTH_SHORT).show();
-                            alertDialog.dismiss();
+
+                            if (et_name.getText().toString().trim().isEmpty()){
+                                et_name.setError("Enter Your Name");
+                                et_name.requestFocus();
+                                return;
+                            }
+                            else if (et_address.getText().toString().trim().isEmpty()){
+                                et_address.setError("Enter Your Address");
+                                et_address.requestFocus();
+                                return;
+                            }
+                            else if (et_mobile.getText().toString().trim().isEmpty()){
+                                et_mobile.setError("Enter Your Mobile Number");
+                                et_mobile.requestFocus();
+                                return;
+                            }
+                            else if (et_email.getText().toString().trim().isEmpty()){
+                                et_email.setError("Enter Your Mobile Number");
+                                et_email.requestFocus();
+                                return;
+                            }
+                            else {
+                                final String name=et_name.getText().toString().trim();
+                                final String address=et_address.getText().toString().trim();
+                                final String mobile=et_mobile.getText().toString().trim();
+                                emailId=et_email.getText().toString().trim();
+                                StringRequest stringRequest=new StringRequest(Request.Method.POST, WebURLS.HOME_SERVICES, new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Toast.makeText(AvailServiceActivity.this, ""+response, Toast.LENGTH_SHORT).show();
+                                    }
+                                }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+                                        Toast.makeText(AvailServiceActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }){
+
+                                    @Override
+                                    protected Map<String, String> getParams() throws AuthFailureError {
+                                        Map<String,String> map=new HashMap<>();
+                                        map.put("PatientID",pId);
+                                        map.put("Name",name);
+                                        map.put("Email",emailId);
+                                        map.put("ContactNo",mobile);
+                                        map.put("Address",address);
+                                        map.put("HomeServiceType",gridName);
+                                        return map;
+                                    }
+                                };
+                                VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+
+                            }
+
                         }
                     });
                     alertDialog.show();
