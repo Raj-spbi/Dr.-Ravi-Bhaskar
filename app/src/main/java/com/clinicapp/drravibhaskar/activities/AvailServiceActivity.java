@@ -1,5 +1,6 @@
 package com.clinicapp.drravibhaskar.activities;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -41,13 +42,17 @@ public class AvailServiceActivity extends AppCompatActivity {
     GridView gridView;
     List<ModelGrid> modelGrids;
     AdapterAvailService adapterAvailService;
+    ProgressDialog progressDialog;
 
     String pId="";
     String emailId="";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_avail_service);
+
+        progressDialog=new ProgressDialog(this);
         gridView=findViewById(R.id.gridView);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -75,7 +80,7 @@ public class AvailServiceActivity extends AppCompatActivity {
 
         ModelUser user = SharedPrefManagerAdmin.getInstance(AvailServiceActivity.this).getUser();
         pId=user.getPatientID();
-        Toast.makeText(this, ""+pId, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, ""+pId, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -151,7 +156,6 @@ public class AvailServiceActivity extends AppCompatActivity {
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
                             if (et_name.getText().toString().trim().isEmpty()){
                                 et_name.setError("Enter Your Name");
                                 et_name.requestFocus();
@@ -173,6 +177,8 @@ public class AvailServiceActivity extends AppCompatActivity {
                                 return;
                             }
                             else {
+                                progressDialog.show();
+                                progressDialog.setMessage("We will contact you soon");
                                 final String name=et_name.getText().toString().trim();
                                 final String address=et_address.getText().toString().trim();
                                 final String mobile=et_mobile.getText().toString().trim();
@@ -180,12 +186,15 @@ public class AvailServiceActivity extends AppCompatActivity {
                                 StringRequest stringRequest=new StringRequest(Request.Method.POST, WebURLS.HOME_SERVICES, new Response.Listener<String>() {
                                     @Override
                                     public void onResponse(String response) {
-                                        Toast.makeText(AvailServiceActivity.this, ""+response, Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
+                                        Toast.makeText(AvailServiceActivity.this, "Completed Successfully", Toast.LENGTH_SHORT).show();
+                                        alertDialog.dismiss();
                                     }
                                 }, new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-                                        Toast.makeText(AvailServiceActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                                        progressDialog.dismiss();
+                                        Toast.makeText(AvailServiceActivity.this, "Server not responding", Toast.LENGTH_SHORT).show();
                                     }
                                 }){
 

@@ -138,7 +138,7 @@ public class MorningFragment extends Fragment {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String message = jsonObject.getString("Error");
-                    Toast.makeText(getContext(), "" + message, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "" + message, Toast.LENGTH_SHORT).show();
                     if (message.equalsIgnoreCase("success")) {
                         JSONArray jsonArray = jsonObject.getJSONArray("ResultRows");
                         for (int j = 0; j < jsonArray.length(); j++) {
@@ -169,32 +169,6 @@ public class MorningFragment extends Fragment {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-                //                try {
-////                    JSONArray jsonArray=new JSONArray(response);
-//
-//
-////                    for (int i=0;i<jsonArray.length();i++) {
-////
-////                        JSONObject jsonObject = jsonArray.getJSONObject(i);
-////
-////                        if (jsonObject.equals("Message")) {
-////                            Toast.makeText(getContext(), ""+jsonObject.getString("Message"), Toast.LENGTH_SHORT).show();
-////                        } else {
-////                            //
-//////                        ModelSlots modelSlots=new ModelSlots(jsonObject.getString("SlotId"),jsonObject.getString("Date"),
-//////                                jsonObject.getString("Slot"),jsonObject.getString("Timing"),jsonObject.getString("status"),
-//////                                jsonObject.getString("IsActive"));
-////
-////                            items.add(new ModelSlots(jsonObject.getString("SlotId"), jsonObject.getString("Date"),
-////                                    jsonObject.getString("Slot"), jsonObject.getString("Timing"), jsonObject.getString("status"),
-////                                    jsonObject.getString("IsActive")));
-////                        }
-//                    }
-//                } catch (JSONException e) {
-//                    e.printStackTrace();
-//                }
                 gridAdaptor = new GridAdaptor(getActivity(), items);
                 gridView.setAdapter(gridAdaptor);
             }

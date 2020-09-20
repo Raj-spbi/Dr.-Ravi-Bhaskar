@@ -1,6 +1,7 @@
 package com.clinicapp.drravibhaskar.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -38,9 +39,10 @@ public class BookingFormActivity extends AppCompatActivity {
 
     TextView txt_date, txt_time, txt_fileName;
     Spinner gender;
-    Button openGallery, submit;
+    Button openGallery,submit;
     Bitmap bitmap;
     String imgRes="";
+    ProgressDialog progressDialog;
 
     EditText patientName, patientContact, patientEmailId, patientAge, patientOccupation, patienCity, patientDesc;
 
@@ -129,15 +131,15 @@ public class BookingFormActivity extends AppCompatActivity {
             }
         });
 
-        openGallery.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                intent.setType("image/*"); //
-                intent.addCategory(Intent.CATEGORY_OPENABLE);
-                startActivityForResult(intent,10);
-            }
-        });
+//        openGallery.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent=new Intent(Intent.ACTION_OPEN_DOCUMENT);
+//                intent.setType("image/*"); //
+//                intent.addCategory(Intent.CATEGORY_OPENABLE);
+//                startActivityForResult(intent,10);
+//            }
+//        });
 
     }
 
@@ -198,20 +200,19 @@ public class BookingFormActivity extends AppCompatActivity {
             patientDesc.requestFocus();
             return;
         }
-//        else if (bitmap==null){
-//            Toast.makeText(this, "Choose Your Profile", Toast.LENGTH_SHORT).show();
-//        }
         else {
+            progressDialog.show();
             StringRequest stringRequest=new StringRequest(Request.Method.POST, WebURLS.BOOKING_APPOINTMENT, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-
+                    progressDialog.dismiss();
                     Toast.makeText(BookingFormActivity.this, ""+response, Toast.LENGTH_SHORT).show();
 
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    progressDialog.dismiss();
                     Toast.makeText(BookingFormActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }){
@@ -239,34 +240,34 @@ public class BookingFormActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == 10 && resultCode == Activity.RESULT_OK && data != null) {
-            Uri imgUri = data.getData();
-            txt_fileName.setText("image.png");
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgUri);
-                imgRes = convertBitmapToBase64(bitmap);
-                //Toast.makeText(this, imgRes + "  converter mehtod", Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                Toast.makeText(this, e.getMessage() + "  error message", Toast.LENGTH_SHORT).show();
-            }
-
-        } else {
-            Toast.makeText(this, "error in on activityresult", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    private String convertBitmapToBase64(Bitmap bitmap) {
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-        //Toast.makeText(this, Base64.encodeToString(byteArray, Base64.DEFAULT).toString() + "", Toast.LENGTH_SHORT).show();
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode == 10 && resultCode == Activity.RESULT_OK && data != null) {
+//            Uri imgUri = data.getData();
+//            txt_fileName.setText("image.png");
+//            try {
+//                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imgUri);
+//                imgRes = convertBitmapToBase64(bitmap);
+//                //Toast.makeText(this, imgRes + "  converter mehtod", Toast.LENGTH_SHORT).show();
+//            } catch (IOException e) {
+//                Toast.makeText(this, e.getMessage() + "  error message", Toast.LENGTH_SHORT).show();
+//            }
+//
+//        } else {
+//            Toast.makeText(this, "error in on activityresult", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+//
+//
+//    private String convertBitmapToBase64(Bitmap bitmap) {
+//        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 50, byteArrayOutputStream);
+//        byte[] byteArray = byteArrayOutputStream.toByteArray();
+//
+//        //Toast.makeText(this, Base64.encodeToString(byteArray, Base64.DEFAULT).toString() + "", Toast.LENGTH_SHORT).show();
+//        return Base64.encodeToString(byteArray, Base64.DEFAULT);
+//    }
 
 }
