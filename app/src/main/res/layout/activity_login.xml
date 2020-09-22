@@ -68,15 +68,15 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.skydoves.elasticviews.ElasticButton
+        <Button
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="30dp"
             android:text="Login Now"
-            android:background="@drawable/btn_back"
-            android:textColor="@android:color/white"
+            android:background="@drawable/bg_button1"
+            android:textColor="@color/white"
             android:textAllCaps="false"
             android:id="@+id/btn_login"/>
         <TextView

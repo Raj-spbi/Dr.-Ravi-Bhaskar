@@ -5,13 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.clinicapp.drravibhaskar.R;
 import com.skydoves.elasticviews.ElasticButton;
 
 public class RegistrationActivity extends AppCompatActivity {
 
-    ElasticButton btn_reg;
+    Button btn_reg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

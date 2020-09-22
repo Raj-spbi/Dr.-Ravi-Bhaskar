@@ -254,14 +254,14 @@
 
             <!--            </RelativeLayout>-->
 
-            <com.skydoves.elasticviews.ElasticButton
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_margin="20dp"
                 android:id="@+id/submit"
-                android:background="@drawable/btn_back"
+                android:background="@drawable/bg_button1"
                 android:text="Submit"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:textAllCaps="false"/>
 
         </LinearLayout>

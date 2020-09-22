@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,7 +35,8 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    ElasticButton btn_login,btn_registration;
+    ElasticButton btn_registration;
+    Button btn_login;
     TextView txt_forgotPassword;
     EditText et_email,et_password;
     String email="";

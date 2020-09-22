@@ -2,8 +2,11 @@ package com.clinicapp.drravibhaskar.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,8 +23,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NoConnectionError;
+import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.clinicapp.drravibhaskar.R;
@@ -30,8 +38,16 @@ import com.clinicapp.drravibhaskar.managers.SharedPrefManagerAdmin;
 import com.clinicapp.drravibhaskar.managers.VolleySingleton;
 import com.clinicapp.drravibhaskar.managers.WebURLS;
 
+import org.apache.http.conn.ConnectTimeoutException;
+import org.json.JSONException;
+import org.xmlpull.v1.XmlPullParserException;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.MalformedURLException;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -63,6 +79,7 @@ public class BookingFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_form);
 
+        progressDialog=new ProgressDialog(BookingFormActivity.this);
         ToolBar();
         FindViewByID();
         myClickListener();
@@ -201,19 +218,61 @@ public class BookingFormActivity extends AppCompatActivity {
             return;
         }
         else {
-            progressDialog.show();
+//            progressDialog.show();
             StringRequest stringRequest=new StringRequest(Request.Method.POST, WebURLS.BOOKING_APPOINTMENT, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     progressDialog.dismiss();
-                    Toast.makeText(BookingFormActivity.this, ""+response, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(BookingFormActivity.this, "Result: "+response, Toast.LENGTH_SHORT).show();
 
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     progressDialog.dismiss();
-                    Toast.makeText(BookingFormActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
+                    if (error instanceof NoConnectionError) {
+                        ConnectivityManager cm = (ConnectivityManager) getApplicationContext()
+                                .getSystemService(Context.CONNECTIVITY_SERVICE);
+                        NetworkInfo activeNetwork = null;
+                        if (cm != null) {
+                            activeNetwork = cm.getActiveNetworkInfo();
+                        }
+                        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+                            Toast.makeText(getApplicationContext(), "Server is not connected to internet.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Your device is not connected to internet.",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    } else if (error instanceof NetworkError || error.getCause() instanceof ConnectException
+                            && error.getCause().getMessage().contains("connection")) {
+                        Toast.makeText(getApplicationContext(), "Your device is not connected to internet.",
+                                Toast.LENGTH_SHORT).show();
+                    } else if (error.getCause() instanceof MalformedURLException) {
+                        Toast.makeText(getApplicationContext(), "Bad Request.", Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof ParseError || error.getCause() instanceof IllegalStateException
+                            || error.getCause() instanceof JSONException
+                            || error.getCause() instanceof XmlPullParserException) {
+                        Toast.makeText(getApplicationContext(), "Parse Error (because of invalid json or xml).",
+                                Toast.LENGTH_SHORT).show();
+                    } else if (error.getCause() instanceof OutOfMemoryError) {
+                        Toast.makeText(getApplicationContext(), "Out Of Memory Error.", Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof AuthFailureError) {
+                        Toast.makeText(getApplicationContext(), "server couldn't find the authenticated request.",
+                                Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof ServerError || error.getCause() instanceof ServerError) {
+                        Toast.makeText(getApplicationContext(), "Server is not responding.", Toast.LENGTH_SHORT).show();
+                    } else if (error instanceof TimeoutError || error.getCause() instanceof SocketTimeoutException
+                            || error.getCause() instanceof ConnectTimeoutException
+                            || error.getCause() instanceof SocketException
+                            || (error.getCause().getMessage() != null
+                            && error.getCause().getMessage().contains("Connection timed out"))) {
+                        Toast.makeText(getApplicationContext(), "Connection timeout error",
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "An unknown error occurred.",
+                                Toast.LENGTH_SHORT).show();
+                    }
                 }
             }){
                 @Override

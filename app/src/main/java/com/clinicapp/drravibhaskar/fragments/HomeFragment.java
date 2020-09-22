@@ -2,47 +2,54 @@ package com.clinicapp.drravibhaskar.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 import com.clinicapp.drravibhaskar.R;
 import com.clinicapp.drravibhaskar.activities.LoginActivity;
 import com.clinicapp.drravibhaskar.adapters.AdapterCustomList1;
+import com.clinicapp.drravibhaskar.adapters.SliderAdapter;
 import com.clinicapp.drravibhaskar.apimodels.ModelUser;
 import com.clinicapp.drravibhaskar.managers.SharedPrefManagerAdmin;
 import com.clinicapp.drravibhaskar.models.ModelCustomList1;
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
-import com.daimajia.slider.library.SliderLayout;
-import com.daimajia.slider.library.SliderTypes.BaseSliderView;
-import com.daimajia.slider.library.SliderTypes.TextSliderView;
-import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.clinicapp.drravibhaskar.models.SliderModel;
+import com.clinicapp.drravibhaskar.transformation.DepthPageTransformer;
+import com.clinicapp.drravibhaskar.transformation.ZoomOutPageTransformer;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class HomeFragment extends Fragment implements ViewPagerEx.OnPageChangeListener, BaseSliderView.OnSliderClickListener {
+public class HomeFragment extends Fragment  {
 
     ListView listView;
     List<ModelCustomList1> modelCustomList1s;
     AdapterCustomList1 adapterCustomList1;
 
-    ViewPager viewPager;
-    TabLayout tabLayout;
+
     TextView username;
-    //    MyCustomPagerAdaptor pagerAdaptor;
-//    ArrayList<ModelImageBannerItem> list;
-    SliderLayout mDemoSlider;
+
+
+    ViewPager viewPager;
+    List<SliderModel> sliderModels;
+    private int currentPage = 2;
+    private Timer timer;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -55,69 +62,6 @@ public class HomeFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         listView = view.findViewById(R.id.list1);
 
-        mDemoSlider = view.findViewById(R.id.slider);
-        HashMap<String, Integer> file_maps = new HashMap<String, Integer>();
-        file_maps.put("Chat with Doctor", R.drawable.banner5);
-        file_maps.put("Big Bang Theory", R.drawable.banner3);
-        file_maps.put("House of Cards", R.drawable.banner1);
-        file_maps.put("Test Booking", R.drawable.banner2);
-        file_maps.put("Talk With Your Doctor", R.drawable.banner4);
-
-        for (String name : file_maps.keySet()) {
-            TextSliderView textSliderView = new TextSliderView(getContext());
-            // initialize a SliderLayout
-            textSliderView
-                    .description(name)
-                    .image(file_maps.get(name))
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
-
-            //add your extra information
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle().putString("extra", name);
-            mDemoSlider.addSlider(textSliderView);
-        }
-        mDemoSlider.setPresetTransformer(com.daimajia.slider.library.SliderLayout.Transformer.Accordion);
-        mDemoSlider.setPresetIndicator(com.daimajia.slider.library.SliderLayout.PresetIndicators.Center_Bottom);
-        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-        mDemoSlider.setDuration(3000);
-        Random rand = new Random();
-
-// Obtain a number between [0 - 49].
-        int n = rand.nextInt(5);
-        {
-            switch (n) {
-                case 0:
-                    mDemoSlider.setPresetTransformer("FlipHorizontal");
-                    break;
-                case 1:
-                    mDemoSlider.setPresetTransformer("CubeIn");
-                    break;
-                case 2:
-                    mDemoSlider.setPresetTransformer("DepthPage");
-                    break;
-                case 3:
-                    mDemoSlider.setPresetTransformer("Tablet");
-                    break;
-                case 4:
-                    mDemoSlider.setPresetTransformer("Stack");
-                    break;
-                case 5:
-                    mDemoSlider.setPresetTransformer("Foreground2Background");
-                    break;
-                case 6:
-                    mDemoSlider.setPresetTransformer("Background2Foreground");
-                    break;
-                case 7:
-                    mDemoSlider.setPresetTransformer("Accordian");
-                    break;
-                default:
-                    mDemoSlider.setPresetTransformer("Default");
-                    break;
-            }
-        }
-//        mDemoSlider.setPresetTransformer("FlipHorizontal");
-        mDemoSlider.addOnPageChangeListener(this);
 
         if (!SharedPrefManagerAdmin.getInstance(getContext()).isLoggedIn()) {
             Intent intent = new Intent(getActivity(), LoginActivity.class);
@@ -140,6 +84,83 @@ public class HomeFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
 
 
 
+//        All About Slider .... Starts Here
+        viewPager = view.findViewById(R.id.viewPager);
+        sliderModels = new ArrayList<>();
+        sliderModels.add(new SliderModel(R.drawable.banner1));
+        sliderModels.add(new SliderModel(R.drawable.banner2));
+
+        sliderModels.add(new SliderModel(R.drawable.banner3));
+        sliderModels.add(new SliderModel(R.drawable.banner4));
+        sliderModels.add(new SliderModel(R.drawable.banner5));
+        sliderModels.add(new SliderModel(R.drawable.banner2));
+        sliderModels.add(new SliderModel(R.drawable.banner1));
+        sliderModels.add(new SliderModel(R.drawable.banner2));
+
+        sliderModels.add(new SliderModel(R.drawable.banner3));
+        sliderModels.add(new SliderModel(R.drawable.banner4));
+        SliderAdapter sliderAdapter = new SliderAdapter(sliderModels);
+        viewPager.setAdapter(sliderAdapter);
+        viewPager.setClipToPadding(false);
+        viewPager.setPageMargin(20);
+        viewPager.setCurrentItem(currentPage);
+        ViewPager.OnPageChangeListener onPageChangeListener = new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (state == ViewPager.SCROLL_STATE_IDLE) {
+                    pageLooper();
+                }
+            }
+        };
+        viewPager.addOnPageChangeListener(onPageChangeListener);
+        startbannerSlideShow();
+        viewPager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                pageLooper();
+                stopbannerSlideShow();
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    startbannerSlideShow();
+                }
+                return false;
+            }
+        });
+
+        Random random = new Random();
+        int n = random.nextInt(5);
+        if (n == 0) {
+            viewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+                @Override
+                public void transformPage(@NonNull View page, float position) {
+                    viewPager.setPageTransformer(true, new DepthPageTransformer());
+
+                }
+            });
+
+        } else {
+
+            viewPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+                @Override
+                public void transformPage(@NonNull View page, float position) {
+                    viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
+                }
+            });
+
+        }
+//         Slider Ends Here..................
+
+
+
         modelCustomList1s=new ArrayList<>();
         modelCustomList1s.add(new ModelCustomList1("Book Appointment", R.drawable.ic_baseline_date_range_24));
         modelCustomList1s.add(new ModelCustomList1("Avail Home Service", R.drawable.stethoscope_1));
@@ -149,6 +170,42 @@ public class HomeFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
         listView.setAdapter(adapterCustomList1);
         return view;
     }
+    private void pageLooper() {
+        if (currentPage == sliderModels.size() - 2) {
+            currentPage = 2;
+            viewPager.setCurrentItem(currentPage, false);
+        }
+        if (currentPage == 1) {
+            currentPage = sliderModels.size() - 3;
+            viewPager.setCurrentItem(currentPage, false);
+        }
+    }
+
+    private void startbannerSlideShow() {
+        final Handler handler = new Handler();
+        final Runnable update = new Runnable() {
+            @Override
+            public void run() {
+                if (currentPage >= sliderModels.size()) {
+                    currentPage = 1;
+                }
+                viewPager.setCurrentItem(currentPage++, true);
+            }
+        };
+        timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(update);
+            }
+        }, 3000, 3000);
+    }
+
+    private void stopbannerSlideShow() {
+        timer.cancel();
+    }
+
+
 
 
 //    private void addImages() {
@@ -162,26 +219,7 @@ public class HomeFragment extends Fragment implements ViewPagerEx.OnPageChangeLi
 //
 //    }
 
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//        Toast.makeText(this, "Scrolled", Toast.LENGTH_SHORT).show();
-    }
 
-    @Override
-    public void onPageSelected(int position) {
-        Log.d("Slider Demo", "Page Changed: " + position);
-//        Toast.makeText(this, "Page Changed", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-//        Toast.makeText(this, "Page Changed "+state, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
-        Toast.makeText(getContext(), slider.getBundle().get("extra") + "", Toast.LENGTH_SHORT).show();
-    }
 
 //    private  class MyCustomPagerAdaptor extends PagerAdapter {
 //
