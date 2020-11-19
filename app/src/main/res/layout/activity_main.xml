@@ -7,25 +7,41 @@
     android:fitsSystemWindows="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
-        android:id="@+id/containerBig"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <RelativeLayout
             android:layout_width="match_parent"
-            app:titleTextColor="@color/colorPrimary"
-            android:background="@android:color/transparent"
             android:layout_height="?attr/actionBarSize"
-            android:elevation="8dp"
-            android:translationZ="8dp"
-            android:backgroundTint="@color/white"
-            android:minHeight="?attr/actionBarSize">
-        </androidx.appcompat.widget.Toolbar>
+            android:id="@+id/rel_toolbar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="300dp"
+                app:titleTextColor="@color/colorPrimary"
+                android:background="@android:color/transparent"
+                android:layout_height="?attr/actionBarSize"
+                android:elevation="8dp"
+                android:translationZ="8dp"
+                android:backgroundTint="@color/white"
+                android:minHeight="?attr/actionBarSize">
+            </androidx.appcompat.widget.Toolbar>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:id="@+id/img_btnSettings"
+                android:background="@drawable/settings"/>
+
+        </RelativeLayout>
+
 
          <RelativeLayout
-            android:layout_below="@id/toolbar"
+            android:layout_below="@id/rel_toolbar"
             android:id="@+id/container"
             android:orientation="vertical"
             android:layout_width="match_parent"

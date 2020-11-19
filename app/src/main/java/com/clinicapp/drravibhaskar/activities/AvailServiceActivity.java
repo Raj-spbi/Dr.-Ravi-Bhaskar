@@ -31,6 +31,7 @@ import com.clinicapp.drravibhaskar.managers.SharedPrefManagerAdmin;
 import com.clinicapp.drravibhaskar.managers.VolleySingleton;
 import com.clinicapp.drravibhaskar.managers.WebURLS;
 import com.clinicapp.drravibhaskar.models.ModelGrid;
+import com.clinicapp.drravibhaskar.models.ModelLogin;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +44,7 @@ public class AvailServiceActivity extends AppCompatActivity {
     List<ModelGrid> modelGrids;
     AdapterAvailService adapterAvailService;
     ProgressDialog progressDialog;
+    ImageView back_img;
 
     String pId="";
     String emailId="";
@@ -54,20 +56,21 @@ public class AvailServiceActivity extends AppCompatActivity {
 
         progressDialog=new ProgressDialog(this);
         gridView=findViewById(R.id.gridView);
+        back_img=findViewById(R.id.back_img);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setTitle("");
+//        setSupportActionBar(toolbar);
+//        toolbar.setNavigationIcon(R.drawable.ic_baseline_arrow_back_24);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
         modelGrids = new ArrayList<>();
         modelGrids.add(new ModelGrid(R.drawable.cart_ic, "Medicine\nDelivery"));
@@ -78,16 +81,25 @@ public class AvailServiceActivity extends AppCompatActivity {
         adapterAvailService = new AdapterAvailService(getApplicationContext(), modelGrids);
         gridView.setAdapter(adapterAvailService);
 
-        ModelUser user = SharedPrefManagerAdmin.getInstance(AvailServiceActivity.this).getUser();
-        pId=user.getPatientID();
+        ModelLogin.ResultRow resultRow=SharedPrefManagerAdmin.getInstance(getApplicationContext()).getUser();
+        pId=resultRow.getPatientId();
         //Toast.makeText(this, ""+pId, Toast.LENGTH_SHORT).show();
+
+        back_img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
+
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(intent);
         finish();
+
     }
 
     public class AdapterAvailService extends BaseAdapter {
@@ -137,6 +149,7 @@ public class AvailServiceActivity extends AppCompatActivity {
                     final EditText et_address=view1.findViewById(R.id.et_address);
                     final EditText et_mobile=view1.findViewById(R.id.et_mobile);
                     final EditText et_email=view1.findViewById(R.id.et_email);
+                    final EditText et_wdw=view1.findViewById(R.id.et_wdw);
                     Button submit=view1.findViewById(R.id.submit);
                     TextView save=view1.findViewById(R.id.save);
                     TextView event=view1.findViewById(R.id.txt_event);
@@ -176,12 +189,18 @@ public class AvailServiceActivity extends AppCompatActivity {
                                 et_email.requestFocus();
                                 return;
                             }
+                            else if(et_wdw.getText().toString().trim().isEmpty()){
+                                et_wdw.setError("Enter what do you want?");
+                                et_wdw.requestFocus();
+                                return;
+                            }
                             else {
                                 progressDialog.show();
                                 progressDialog.setMessage("We will contact you soon");
                                 final String name=et_name.getText().toString().trim();
                                 final String address=et_address.getText().toString().trim();
                                 final String mobile=et_mobile.getText().toString().trim();
+                                final String whdw=et_wdw.getText().toString().trim();
                                 emailId=et_email.getText().toString().trim();
                                 StringRequest stringRequest=new StringRequest(Request.Method.POST, WebURLS.HOME_SERVICES, new Response.Listener<String>() {
                                     @Override
@@ -207,6 +226,7 @@ public class AvailServiceActivity extends AppCompatActivity {
                                         map.put("ContactNo",mobile);
                                         map.put("Address",address);
                                         map.put("HomeServiceType",gridName);
+                                        map.put("WhatYouWant",whdw);
                                         return map;
                                     }
                                 };

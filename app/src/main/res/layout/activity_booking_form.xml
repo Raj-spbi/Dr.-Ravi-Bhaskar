@@ -90,6 +90,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:hint="Phone"
+                android:maxLength="10"
                 android:textSize="13sp"
                 android:fontFamily="@font/poppins"
                 android:inputType="phone"
@@ -163,6 +164,19 @@
                 android:background="@drawable/edittextback"/>
 
             <EditText
+                android:id="@+id/patientDesc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:hint="Enter Address"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins"
+                android:padding="10dp"
+                android:background="@drawable/edittextback"/>
+
+            <EditText
                 android:id="@+id/patienCity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -177,18 +191,7 @@
                 android:paddingLeft="7dp"
                 android:background="@drawable/edittextback"/>
 
-            <EditText
-                android:id="@+id/patientDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:hint="Description"
-                android:textSize="13sp"
-                android:fontFamily="@font/poppins"
-                android:padding="10dp"
-                android:background="@drawable/edittextback"/>
+
 
 <!--            <RelativeLayout-->
 <!--                android:layout_width="match_parent"-->

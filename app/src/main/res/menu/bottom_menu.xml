@@ -16,7 +16,7 @@
     <item
         android:id="@+id/notification"
         android:enabled="true"
-        android:icon="@drawable/ic_baseline_notifications_none_24"
-        android:title="Notification"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/ic_baseline_thumb_up_alt_24"
+        android:title="Patient Story"
+        app:showAsAction="ifRoom"/>
 </menu>

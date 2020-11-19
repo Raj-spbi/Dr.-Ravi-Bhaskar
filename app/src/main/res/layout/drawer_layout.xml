@@ -57,7 +57,6 @@
     </RelativeLayout>
     <!--            android:src="@drawable/logo1_jpg"-->
     <RelativeLayout
-        android:id="@+id/covers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="right">
@@ -259,6 +258,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardView_duration="250"
+                    android:visibility="gone"
                     app:cardView_scale="0.8">
 
                     <LinearLayout
@@ -279,6 +279,39 @@
                             android:layout_margin="8dp"
                             android:fontFamily="@font/poppins"
                             android:text=" Settings"
+                            android:textColor="@color/textcolor"
+                            android:textSize="16dp" />
+                    </LinearLayout>
+                </com.skydoves.elasticviews.ElasticCardView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/viewcolor" />
+
+                <com.skydoves.elasticviews.ElasticCardView
+                    android:id="@+id/feedBack"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardView_duration="250"
+                    app:cardView_scale="0.8">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <ImageView
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_margin="8dp"
+                            android:src="@drawable/ic_baseline_feedback_24" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="8dp"
+                            android:fontFamily="@font/poppins"
+                            android:text=" Feedback"
                             android:textColor="@color/textcolor"
                             android:textSize="16dp" />
                     </LinearLayout>

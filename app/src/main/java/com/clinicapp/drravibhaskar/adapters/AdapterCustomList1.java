@@ -2,6 +2,7 @@ package com.clinicapp.drravibhaskar.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +14,9 @@ import android.widget.Toast;
 import androidx.cardview.widget.CardView;
 import com.clinicapp.drravibhaskar.BookAppointmentActivity;
 import com.clinicapp.drravibhaskar.R;
+import com.clinicapp.drravibhaskar.activities.AppointmentSlotActivtiy;
 import com.clinicapp.drravibhaskar.activities.AvailServiceActivity;
+import com.clinicapp.drravibhaskar.activities.CalendarActivity;
 import com.clinicapp.drravibhaskar.models.ModelCustomList1;
 import java.util.List;
 
@@ -55,14 +58,22 @@ public class AdapterCustomList1 extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (i == 0) {
-                    Intent intent = new Intent(context, BookAppointmentActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    Intent intent = new Intent(context, CalendarActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
                 } else if (i==1){
                     Intent intent = new Intent(context, AvailServiceActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent);
-                }else {
+                }else if(i==2){
+                    Toast.makeText(context, "Available Soon", Toast.LENGTH_SHORT).show();
+                }else if (i==3){
+                    Toast.makeText(context, "Available Soon!!!", Toast.LENGTH_SHORT).show();
+//                    Intent intent=new Intent(Intent.ACTION_VIEW);
+//                    intent.setData(Uri.parse("https://www.youtube.com/watch?v=1GuukHHfgCk"));
+//                    context.startActivity(intent);
+                }
+                else {
                     Toast.makeText(context, "Available Soon", Toast.LENGTH_SHORT).show();
                 }
             }

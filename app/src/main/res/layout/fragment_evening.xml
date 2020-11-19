@@ -38,8 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:text="Morning 09:30 AM to 12:30 PM"
-        android:textColor="@android:color/black" />
+        android:text="Evening 04:30 AM to 07:30 PM"
+        android:textColor="@android:color/black"/>
 
     <GridView
         android:id="@+id/gridTimeSlot"
@@ -47,6 +47,27 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:numColumns="3" />
+
+    <LinearLayout
+        android:id="@+id/cover"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Please go to evening slot."
+            android:textSize="15dp"
+            android:fontFamily="sans-serif-medium"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/no_slot"/>
+    </LinearLayout>
 
 
 </LinearLayout>

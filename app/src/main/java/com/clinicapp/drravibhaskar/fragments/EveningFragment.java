@@ -5,6 +5,7 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -71,6 +72,8 @@ public class EveningFragment extends Fragment {
     TextView dateset;
     String currentDate = "";
 
+    LinearLayout cover;
+
     public EveningFragment() {
         // Required empty public constructor
     }
@@ -81,165 +84,170 @@ public class EveningFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_evening, container, false);
-        dateset = view.findViewById(R.id.dateset);
-        date = view.findViewById(R.id.date);
-
-        Calendar calendar1 = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
-        currentDate = dateFormat.format(calendar1.getTime());
-        items = new ArrayList<>();
-        dateset.setText(currentDate);
-
-        gridView = view.findViewById(R.id.gridTimeSlot);
-        setData(currentDate);
-        gridAdaptor = new GridAdaptor(getContext(), items);
-        gridView.setAdapter(gridAdaptor);
-
-        date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                calendar[0] = Calendar.getInstance();
-                year[0] = calendar[0].get(Calendar.YEAR);
-                month[0] = calendar[0].get(Calendar.MONTH);
-                dayOfMonth[0] = calendar[0].get(Calendar.DAY_OF_MONTH);
-                datePickerDialog[0] = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        CharSequence strDate = null;
-                        Time chosenDate = new Time();
-                        chosenDate.set(dayOfMonth, month, year);
-                        long dtDob = chosenDate.toMillis(true);
-                        strDate = DateFormat.format("EEEE, dd MMMM yyyy", dtDob);
-                        dateset.setText(strDate);
-                        currentDate = String.valueOf(strDate);
-
-                        setData(currentDate);
-//                                dateset.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                    }
-                }, year[0], month[0], dayOfMonth[0]);
-                datePickerDialog[0].getDatePicker().setMinDate(System.currentTimeMillis());
-                datePickerDialog[0].show();
-            }
-        });
+//        dateset = view.findViewById(R.id.dateset);
+//        date = view.findViewById(R.id.date);
+//        cover = view.findViewById(R.id.cover);
+//        cover.setVisibility(View.GONE);
+//
+//        Calendar calendar1 = Calendar.getInstance();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+//        currentDate = dateFormat.format(calendar1.getTime());
+//        items = new ArrayList<>();
+//        dateset.setText(currentDate);
+//
+//        gridView = view.findViewById(R.id.gridTimeSlot);
+//        setData(currentDate);
+//        gridAdaptor = new GridAdaptor(getContext(), items);
+//        gridView.setAdapter(gridAdaptor);
+//
+//        date.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                calendar[0] = Calendar.getInstance();
+//                year[0] = calendar[0].get(Calendar.YEAR);
+//                month[0] = calendar[0].get(Calendar.MONTH);
+//                dayOfMonth[0] = calendar[0].get(Calendar.DAY_OF_MONTH);
+//                datePickerDialog[0] = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                        CharSequence strDate = null;
+//                        Time chosenDate = new Time();
+//                        chosenDate.set(dayOfMonth, month, year);
+//                        long dtDob = chosenDate.toMillis(true);
+//                        strDate = DateFormat.format("EEEE, dd MMMM yyyy", dtDob);
+//                        dateset.setText(strDate);
+//                        currentDate = String.valueOf(strDate);
+//
+//                        setData(currentDate);
+////                                dateset.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+//                    }
+//                }, year[0], month[0], dayOfMonth[0]);
+//                datePickerDialog[0].getDatePicker().setMinDate(System.currentTimeMillis());
+//                datePickerDialog[0].show();
+//            }
+//        });
 
         return view;
     }
 
-    private void setData(final String currentDate) {
-
-        items.clear();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, WebURLS.AllDate, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("status", "onResponse: " + response);
-//                    Toast.makeText(getContext(), ""+currentDate+" "+response, Toast.LENGTH_SHORT).show();
-
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String message = jsonObject.getString("Error");
-                    Toast.makeText(getContext(), "" + message, Toast.LENGTH_SHORT).show();
-                    if (message.equalsIgnoreCase("success")) {
-                        JSONArray jsonArray = jsonObject.getJSONArray("ResultRows");
-                        for (int j = 0; j < jsonArray.length(); j++) {
-                            JSONObject jsonObject1 = jsonArray.getJSONObject(j);
-
-                            items.add(new ModelSlots(jsonObject1.getString("SlotId"), jsonObject1.getString("Date"),
-                                    jsonObject1.getString("Slot"), jsonObject1.getString("Timing"), jsonObject1.getString("status"),
-                                    jsonObject1.getString("IsActive")));
-                        }
-                        gridAdaptor = new GridAdaptor(getContext(), items);
-                        gridView.setAdapter(gridAdaptor);
-                    } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                        builder.setTitle("Alert !");
-                        builder.setMessage(message);
-                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-
-
-                                dialogInterface.dismiss();
-                                //ntd
-                            }
-                        });
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                gridAdaptor = new GridAdaptor(getActivity(), items);
-                gridView.setAdapter(gridAdaptor);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                if (error instanceof NoConnectionError) {
-                    ConnectivityManager cm = (ConnectivityManager) getActivity()
-                            .getSystemService(Context.CONNECTIVITY_SERVICE);
-                    NetworkInfo activeNetwork = null;
-                    if (cm != null) {
-                        activeNetwork = cm.getActiveNetworkInfo();
-                    }
-                    if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
-                        Toast.makeText(getActivity(), "Server is not connected to internet.",
-                                Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), "Your device is not connected to internet.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                } else if (error instanceof NetworkError || error.getCause() instanceof ConnectException
-                        || (error.getCause().getMessage() != null
-                        && error.getCause().getMessage().contains("connection"))) {
-                    Toast.makeText(getActivity(), "Your device is not connected to internet.",
-                            Toast.LENGTH_SHORT).show();
-                } else if (error.getCause() instanceof MalformedURLException) {
-                    Toast.makeText(getActivity(), "Bad Request.", Toast.LENGTH_SHORT).show();
-                } else if (error instanceof ParseError || error.getCause() instanceof IllegalStateException
-                        || error.getCause() instanceof JSONException
-                        || error.getCause() instanceof XmlPullParserException) {
-                    Toast.makeText(getActivity(), "Parse Error (because of invalid json or xml).",
-                            Toast.LENGTH_SHORT).show();
-                } else if (error.getCause() instanceof OutOfMemoryError) {
-                    Toast.makeText(getActivity(), "Out Of Memory Error.", Toast.LENGTH_SHORT).show();
-                } else if (error instanceof AuthFailureError) {
-                    Toast.makeText(getActivity(), "server couldn't find the authenticated request.",
-                            Toast.LENGTH_SHORT).show();
-                } else if (error instanceof ServerError || error.getCause() instanceof ServerError) {
-                    Toast.makeText(getActivity(), "Server is not responding.", Toast.LENGTH_SHORT).show();
-                } else if (error instanceof TimeoutError || error.getCause() instanceof SocketTimeoutException
-                        || error.getCause() instanceof ConnectTimeoutException
-                        || error.getCause() instanceof SocketException
-                        || (error.getCause().getMessage() != null
-                        && error.getCause().getMessage().contains("Connection timed out"))) {
-                    Toast.makeText(getActivity(), "Connection timeout error",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity(), "An unknown error occurred.",
-                            Toast.LENGTH_SHORT).show();
-                }
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> map = new HashMap<>();
-                map.put("Date", currentDate);
-                map.put("Timing", "Evening");
-                return map;
-            }
-        };
-
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-    }
+//    private void setData(final String currentDate) {
+//
+//        items.clear();
+//        StringRequest stringRequest = new StringRequest(Request.Method.POST, WebURLS.AllDate, new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                Log.d("status", "onResponse: " + response);
+////                    Toast.makeText(getContext(), ""+currentDate+" "+response, Toast.LENGTH_SHORT).show();
+//
+//                try {
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    String message = jsonObject.getString("Error");
+//                    Toast.makeText(getContext(), "" + message, Toast.LENGTH_SHORT).show();
+//                    if (message.equalsIgnoreCase("success")) {
+//                        JSONArray jsonArray = jsonObject.getJSONArray("ResultRows");
+//                        for (int j = 0; j < jsonArray.length(); j++) {
+//                            JSONObject jsonObject1 = jsonArray.getJSONObject(j);
+//
+//                            items.add(new ModelSlots(jsonObject1.getString("SlotId"), jsonObject1.getString("Date"),
+//                                    jsonObject1.getString("Slot"), jsonObject1.getString("Timing"), jsonObject1.getString("status"),
+//                                    jsonObject1.getString("IsActive")));
+//                            cover.setVisibility(View.GONE);
+//                        }
+//                        gridAdaptor = new GridAdaptor(getContext(), items);
+//                        gridView.setAdapter(gridAdaptor);
+//                    } else {
+//                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//                        builder.setTitle("Alert !");
+//                        builder.setMessage(message);
+//                        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//
+//
+//                                dialogInterface.dismiss();
+//                                cover.setVisibility(View.VISIBLE);
+//                                //ntd
+//                            }
+//                        });
+//                        AlertDialog alertDialog = builder.create();
+//                        alertDialog.show();
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                gridAdaptor = new GridAdaptor(getActivity(), items);
+//                gridView.setAdapter(gridAdaptor);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                cover.setVisibility(View.VISIBLE);
+//                if (error instanceof NoConnectionError) {
+//                    ConnectivityManager cm = (ConnectivityManager) getActivity()
+//                            .getSystemService(Context.CONNECTIVITY_SERVICE);
+//                    NetworkInfo activeNetwork = null;
+//                    if (cm != null) {
+//                        activeNetwork = cm.getActiveNetworkInfo();
+//                    }
+//                    if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+//                        Toast.makeText(getActivity(), "Server is not connected to internet.",
+//                                Toast.LENGTH_SHORT).show();
+//                    } else {
+//                        Toast.makeText(getActivity(), "Your device is not connected to internet.",
+//                                Toast.LENGTH_SHORT).show();
+//                    }
+//                } else if (error instanceof NetworkError || error.getCause() instanceof ConnectException
+//                        || (error.getCause().getMessage() != null
+//                        && error.getCause().getMessage().contains("connection"))) {
+//                    Toast.makeText(getActivity(), "Your device is not connected to internet.",
+//                            Toast.LENGTH_SHORT).show();
+//                } else if (error.getCause() instanceof MalformedURLException) {
+//                    Toast.makeText(getActivity(), "Bad Request.", Toast.LENGTH_SHORT).show();
+//                } else if (error instanceof ParseError || error.getCause() instanceof IllegalStateException
+//                        || error.getCause() instanceof JSONException
+//                        || error.getCause() instanceof XmlPullParserException) {
+//                    Toast.makeText(getActivity(), "Parse Error (because of invalid json or xml).",
+//                            Toast.LENGTH_SHORT).show();
+//                } else if (error.getCause() instanceof OutOfMemoryError) {
+//                    Toast.makeText(getActivity(), "Out Of Memory Error.", Toast.LENGTH_SHORT).show();
+//                } else if (error instanceof AuthFailureError) {
+//                    Toast.makeText(getActivity(), "server couldn't find the authenticated request.",
+//                            Toast.LENGTH_SHORT).show();
+//                } else if (error instanceof ServerError || error.getCause() instanceof ServerError) {
+//                    Toast.makeText(getActivity(), "Server is not responding.", Toast.LENGTH_SHORT).show();
+//                } else if (error instanceof TimeoutError || error.getCause() instanceof SocketTimeoutException
+//                        || error.getCause() instanceof ConnectTimeoutException
+//                        || error.getCause() instanceof SocketException
+//                        || (error.getCause().getMessage() != null
+//                        && error.getCause().getMessage().contains("Connection timed out"))) {
+//                    Toast.makeText(getActivity(), "Connection timeout error",
+//                            Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(getActivity(), "An unknown error occurred.",
+//                            Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> map = new HashMap<>();
+//                map.put("Date", currentDate);
+//                map.put("Timing", "Evening");
+//                return map;
+//            }
+//        };
+//
+//        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+//    }
 
     private class GridAdaptor extends BaseAdapter {
 
         Context context;
-        ArrayList<ModelSlots> gridItems;
+        ArrayList<ModelSlots.ResultRow> gridItems;
 
-        public GridAdaptor(Context context, ArrayList<ModelSlots> gridItems) {
+        public GridAdaptor(Context context, ArrayList<ModelSlots.ResultRow> gridItems) {
             this.context = context;
             this.gridItems = gridItems;
         }
@@ -284,8 +292,9 @@ public class EveningFragment extends Fragment {
                 lin_container.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
+                        String slotId= String.valueOf(gridItems.get(i).getSlotId());
                         Intent intent = new Intent(getContext(), BookingFormActivity.class);
+                        intent.putExtra("SlotId",slotId);
                         intent.putExtra("date", dateset.getText().toString());
                         intent.putExtra("time", gridItems.get(i).getTiming());
                         startActivity(intent);

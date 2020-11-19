@@ -32,11 +32,13 @@ import com.android.volley.ServerError;
 import com.android.volley.TimeoutError;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.clinicapp.drravibhaskar.BottomSheetClass;
 import com.clinicapp.drravibhaskar.R;
 import com.clinicapp.drravibhaskar.apimodels.ModelUser;
 import com.clinicapp.drravibhaskar.managers.SharedPrefManagerAdmin;
 import com.clinicapp.drravibhaskar.managers.VolleySingleton;
 import com.clinicapp.drravibhaskar.managers.WebURLS;
+import com.clinicapp.drravibhaskar.models.ModelLogin;
 
 import org.apache.http.conn.ConnectTimeoutException;
 import org.json.JSONException;
@@ -73,6 +75,11 @@ public class BookingFormActivity extends AppCompatActivity {
     String Occupation="";
     String Uploadfile="";
     String Discription="";
+    String PatientID="";
+    String slot_id="";
+    String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    String mobilePattern= "^[6-9]{1}[0-9]{9}$";
+    String address="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,17 +91,21 @@ public class BookingFormActivity extends AppCompatActivity {
         FindViewByID();
         myClickListener();
 
+        Intent intent1=getIntent();
+        slot_id=intent1.getStringExtra("SlotId");
+        Toast.makeText(this, ""+slot_id, Toast.LENGTH_SHORT).show();
+
         if (!SharedPrefManagerAdmin.getInstance(getApplicationContext()).isLoggedIn()) {
             Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
-        ModelUser user = SharedPrefManagerAdmin.getInstance(getApplicationContext()).getUser();
+        ModelLogin.ResultRow user=SharedPrefManagerAdmin.getInstance(getApplicationContext()).getUser();
 
         patientName.setText(user.getName());
-        patientContact.setText(user.getContactNo());
+        patientContact.setText(user.getMobileno());
         patientEmailId.setText(user.getEmail());
-        patientAge.setText(user.getAge());
+        patientDesc.setText(user.getStreetAddress());
 
 
 
@@ -148,20 +159,16 @@ public class BookingFormActivity extends AppCompatActivity {
             }
         });
 
-//        openGallery.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent=new Intent(Intent.ACTION_OPEN_DOCUMENT);
-//                intent.setType("image/*"); //
-//                intent.addCategory(Intent.CATEGORY_OPENABLE);
-//                startActivityForResult(intent,10);
-//            }
-//        });
 
     }
 
     private void uploadFormData() {
-
+        progressDialog.show();
+        progressDialog.setTitle("Booking...");
+        ModelLogin.ResultRow resultRow=SharedPrefManagerAdmin.getInstance(getApplicationContext()).getUser();
+        PatientID=resultRow.getPatientId();
+        address=resultRow.getStreetAddress();
+        //Toast.makeText(this, "hii"+PatientID, Toast.LENGTH_SHORT).show();
         BookingDate=txt_date.getText().toString().trim();
         TimeSlot=txt_time.getText().toString().trim();
         PatientName=patientName.getText().toString().trim();
@@ -173,7 +180,15 @@ public class BookingFormActivity extends AppCompatActivity {
         Occupation=patientOccupation.getText().toString().trim();
         Discription=patientDesc.getText().toString().trim();
 
-        if (BookingDate.isEmpty()){
+        if (address==null){
+            Toast.makeText(this, "Please Update Your Profile.", Toast.LENGTH_SHORT).show();
+//            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//            startActivity(intent);
+            BottomSheetClass bottomSheetClass=new BottomSheetClass();
+            bottomSheetClass.show(getSupportFragmentManager(),bottomSheetClass.getTag());
+        }
+        else if (BookingDate.isEmpty()){
             Toast.makeText(this, "Booking Time Not Found ", Toast.LENGTH_SHORT).show();
         }
         else if (TimeSlot.isEmpty()){
@@ -184,12 +199,12 @@ public class BookingFormActivity extends AppCompatActivity {
             patientName.requestFocus();
             return;
         }
-        else if (Email.isEmpty()){
-            patientEmailId.setError("Enter Email");
+        else if (Email.isEmpty() || !Email.matches(emailPattern)){
+            patientEmailId.setError("Enter Valid Email ID");
             patientEmailId.requestFocus();
             return;
         }
-        else if (MobileNumber.isEmpty()){
+        else if (MobileNumber.isEmpty() || !MobileNumber.matches(mobilePattern)){
             patientContact.setError("Enter Mobile Number");
             patientContact.requestFocus();
             return;
@@ -218,13 +233,15 @@ public class BookingFormActivity extends AppCompatActivity {
             return;
         }
         else {
-//            progressDialog.show();
+            progressDialog.show();
             StringRequest stringRequest=new StringRequest(Request.Method.POST, WebURLS.BOOKING_APPOINTMENT, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
                     progressDialog.dismiss();
                     Toast.makeText(BookingFormActivity.this, "Result: "+response, Toast.LENGTH_SHORT).show();
-
+                    Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -288,13 +305,14 @@ public class BookingFormActivity extends AppCompatActivity {
                     map.put("City",City);
                     map.put("Occupation",Occupation);
                     map.put("Discription",Discription);
-                    map.put("Uploadfile",imgRes);
+                    map.put("PatientID",PatientID);
+                    map.put("SlotId",slot_id);
+                    map.put("Address",address);
                     return map;
                 }
             };
             VolleySingleton.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
         }
-
 
 
     }

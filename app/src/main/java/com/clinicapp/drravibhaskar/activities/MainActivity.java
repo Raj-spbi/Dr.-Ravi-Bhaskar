@@ -3,6 +3,7 @@ package com.clinicapp.drravibhaskar.activities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,12 +33,14 @@ import com.clinicapp.drravibhaskar.fragments.AppointmentHistory;
 import com.clinicapp.drravibhaskar.fragments.ChangePasswordFragment;
 import com.clinicapp.drravibhaskar.fragments.ContactUsFragment;
 import com.clinicapp.drravibhaskar.fragments.EveningFragment;
+import com.clinicapp.drravibhaskar.fragments.FeedbackFragment;
 import com.clinicapp.drravibhaskar.fragments.HomeFragment;
 import com.clinicapp.drravibhaskar.fragments.NotificationFragment;
 import com.clinicapp.drravibhaskar.fragments.PrivacyAndPolicy;
 import com.clinicapp.drravibhaskar.fragments.ProfileFragment;
 import com.clinicapp.drravibhaskar.fragments.TermsAndCondition;
 import com.clinicapp.drravibhaskar.managers.SharedPrefManagerAdmin;
+import com.clinicapp.drravibhaskar.models.ModelLogin;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.skydoves.elasticviews.ElasticCardView;
@@ -52,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static FragmentManager FRAGMENT_MANAGER = null;
     NavigationView navigationView;
-    RelativeLayout container;
+    RelativeLayout container,rel_settings;
+    ImageButton img_btnSettings;
     ElasticCardView home, profile,
-            changepassword,aboutus, contactus, share, settings, privacypolicy, termsandcondition,logout;
+            changepassword,aboutus, contactus, feedBack, share, settings, privacypolicy, termsandcondition,logout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +69,9 @@ public class MainActivity extends AppCompatActivity {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
         }
-        ModelUser user = SharedPrefManagerAdmin.getInstance(this).getUser();
+        ModelLogin.ResultRow user=SharedPrefManagerAdmin.getInstance(getApplicationContext()).getUser();
 
-//        Toast.makeText(this, ""+user.getPatientID()+", "+user.getName()+","+user.getImages(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, ""+user.getName()+", "+user.getMobileno()+","+user.getEmail(), Toast.LENGTH_SHORT).show();
         FRAGMENT_MANAGER=getSupportFragmentManager();
         final FragmentTransaction fragmentTransaction=FRAGMENT_MANAGER.beginTransaction();
         fragmentTransaction.replace(R.id.container,new HomeFragment());
@@ -78,16 +83,18 @@ public class MainActivity extends AppCompatActivity {
         useremail=findViewById(R.id.useremail);
         mobileNo=findViewById(R.id.mobileNo);
         userimage=findViewById(R.id.userimage);
+        //rel_settings=findViewById(R.id.rel_settings);
+        img_btnSettings=findViewById(R.id.img_btnSettings);
 
         username.setText(user.getName());
 //        Toast.makeText(this, ""+user.getName(), Toast.LENGTH_SHORT).show();
         useremail.setText(user.getEmail());
-        mobileNo.setText(user.getContactNo());
-        if (user.getImages().isEmpty()){
-            userimage.setImageResource(R.drawable.user_avtar);
-        }else {
-            Glide.with(getApplicationContext()).load(user.getImages()).placeholder(R.drawable.user_avtar).into(userimage);
-        }
+        mobileNo.setText(user.getMobileno());
+//        if (user.getImages().isEmpty()){
+//            userimage.setImageResource(R.drawable.user_avtar);
+//        }else {
+//            Glide.with(getApplicationContext()).load(user.getImages()).placeholder(R.drawable.user_avtar).into(userimage);
+//        }
 
 
 
@@ -97,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
         changepassword = findViewById(R.id.changepassword);
         aboutus = findViewById(R.id.aboutus);
         contactus = findViewById(R.id.contactus);
+        feedBack = findViewById(R.id.feedBack);
         share = findViewById(R.id.share);
         settings = findViewById(R.id.settings);
         privacypolicy=findViewById(R.id.privacypolicy);
@@ -119,6 +127,40 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation_view);
         myToolBar.setNavigationIcon(R.drawable.menuravi);
 
+
+        img_btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                PopupMenu popup = new PopupMenu(MainActivity.this, view);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        switch (item.getItemId()){
+                            case R.id.Profile:
+                                drawer.closeDrawer(GravityCompat.START);
+                                FragmentManager fragmentManagerz=getSupportFragmentManager();
+                                FragmentTransaction fragmentTransactionz=fragmentManagerz.beginTransaction();
+                                fragmentTransactionz.replace(R.id.container,new ProfileFragment());
+                                fragmentTransactionz.addToBackStack(null);
+                                fragmentTransactionz.commit();
+                                return true;
+                            case R.id.itme_logout:
+                                SharedPrefManagerAdmin.getInstance(getApplicationContext()).logout();
+                                Intent i=new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(i);
+                                finish();
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }
+                });
+                popup.inflate(R.menu.topmenu);
+                popup.show();
+
+            }
+        });
 
 
         home.setOnClickListener(new View.OnClickListener() {
@@ -221,6 +263,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        feedBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.closeDrawer(GravityCompat.START);
+                FragmentManager fragmentManagerz=getSupportFragmentManager();
+                FragmentTransaction fragmentTransactionz=fragmentManagerz.beginTransaction();
+                fragmentTransactionz.replace(R.id.container,new FeedbackFragment());
+                fragmentTransactionz.addToBackStack(null);
+                fragmentTransactionz.commit();
+            }
+        });
+
         share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -245,8 +299,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_navigation);
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -256,8 +309,7 @@ public class MainActivity extends AppCompatActivity {
                         FragmentManager fragmentManager1=getSupportFragmentManager();
                         FragmentTransaction fragmentTransaction1=fragmentManager1.beginTransaction();
                         switch (item.getItemId()) {
-                            case R
-                                    .id.appointments:
+                            case R.id.appointments:
                                 fragmentTransaction1.replace(R.id.container,new AppointmentHistory());
 //                                Toast.makeText(MainActivity.this, "Feature", Toast.LENGTH_SHORT).show();
                                 break;
@@ -289,34 +341,6 @@ public class MainActivity extends AppCompatActivity {
         else
             return false;
 
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.topmenu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        Intent intent;
-        switch (item.getItemId()) {
-
-            case R.id.settings:
-                Toast.makeText(this, "Settings", Toast.LENGTH_SHORT).show();
-//                intent = new Intent(getApplicationContext(), MessageActivity.class);
-//                startActivity(intent);
-//                finish();
-                break;
-//            case R.id.donations:
-//                Toast.makeText(this, "Bookmarked", Toast.LENGTH_SHORT).show();
-////                intent = new Intent(getApplicationContext(), AdminShowDonationActivity.class);
-////                startActivity(intent);
-////                finish();
-//                break;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
 

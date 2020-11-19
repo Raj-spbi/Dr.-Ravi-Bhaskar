@@ -1,6 +1,7 @@
 package com.clinicapp.drravibhaskar.fragments;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -23,6 +24,7 @@ import com.clinicapp.drravibhaskar.adapters.SliderAdapter;
 import com.clinicapp.drravibhaskar.apimodels.ModelUser;
 import com.clinicapp.drravibhaskar.managers.SharedPrefManagerAdmin;
 import com.clinicapp.drravibhaskar.models.ModelCustomList1;
+import com.clinicapp.drravibhaskar.models.ModelLogin;
 import com.clinicapp.drravibhaskar.models.SliderModel;
 import com.clinicapp.drravibhaskar.transformation.DepthPageTransformer;
 import com.clinicapp.drravibhaskar.transformation.ZoomOutPageTransformer;
@@ -42,7 +44,7 @@ public class HomeFragment extends Fragment  {
     AdapterCustomList1 adapterCustomList1;
 
 
-    TextView username;
+    TextView username,txt_visitWebsite;
 
 
     ViewPager viewPager;
@@ -61,6 +63,7 @@ public class HomeFragment extends Fragment  {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         listView = view.findViewById(R.id.list1);
+        txt_visitWebsite=view.findViewById(R.id.txt_visitWebsite);
 
 
         if (!SharedPrefManagerAdmin.getInstance(getContext()).isLoggedIn()) {
@@ -68,7 +71,7 @@ public class HomeFragment extends Fragment  {
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
-        ModelUser user = SharedPrefManagerAdmin.getInstance(getContext()).getUser();
+        ModelLogin.ResultRow user=SharedPrefManagerAdmin.getInstance(getContext()).getUser();
 
         username = view.findViewById(R.id.username);
         String Gender = user.getGender();
@@ -80,6 +83,14 @@ public class HomeFragment extends Fragment  {
             username.setText(user.getName())  ;
         }
 
+        txt_visitWebsite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse("https://www.drravibhaskar.com/"));
+                startActivity(intent);
+            }
+        });
 //        addImages();
 
 
@@ -164,6 +175,8 @@ public class HomeFragment extends Fragment  {
         modelCustomList1s=new ArrayList<>();
         modelCustomList1s.add(new ModelCustomList1("Book Appointment", R.drawable.ic_baseline_date_range_24));
         modelCustomList1s.add(new ModelCustomList1("Avail Home Service", R.drawable.stethoscope_1));
+        modelCustomList1s.add(new ModelCustomList1("Gallery", R.drawable.ic_gallery));
+        modelCustomList1s.add(new ModelCustomList1("Awareness Videos", R.drawable.ic_ribbon));
 //        modelCustomList1s.add(new ModelCustomList1("Buy / Rent Equipments",R.drawable.ic_outline_accessible_24));
 //        modelCustomList1s.add(new ModelCustomList1("Shop Medicine",R.drawable.ic_outline_add_box_24));
         adapterCustomList1 = new AdapterCustomList1(getContext(), modelCustomList1s);
