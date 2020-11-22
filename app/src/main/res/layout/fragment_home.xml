@@ -3,7 +3,7 @@
     android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -47,8 +47,43 @@
                     android:id="@+id/username"
                     android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
-            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_below="@id/username"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_alignParentLeft="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/bg_button1"
+                        android:fontFamily="@font/muli_bold"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="14dp"
+                        android:textStyle="bold"
+                        android:text="Know about express appointment."
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
+                    <ImageButton
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:background="@drawable/ic_baseline_anchor_24"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="30dp"
+                        android:layout_centerVertical="true"/>
+                </RelativeLayout>
+
+            </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout

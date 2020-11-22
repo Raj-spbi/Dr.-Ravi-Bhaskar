@@ -103,7 +103,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:layout_margin="15dp"
-                    app:cardCornerRadius="5dp">
+                    app:cardCornerRadius="5dp"
+                    android:id="@+id/card_grid1">
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -159,7 +160,8 @@
                <androidx.cardview.widget.CardView
                    android:layout_width="match_parent"
                    android:layout_height="300dp"
-                   android:layout_margin="15dp">
+                   android:layout_margin="15dp"
+                   android:id="@+id/card_grid2">
                    <LinearLayout
                        android:layout_width="match_parent"
                        android:layout_height="match_parent"

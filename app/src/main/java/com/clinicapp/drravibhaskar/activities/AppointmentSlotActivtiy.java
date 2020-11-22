@@ -66,7 +66,7 @@ public class AppointmentSlotActivtiy extends AppCompatActivity {
     GridAdaptor gridAdaptor;
     GridAdaptorEvening gridAdaptorEvening;
     ArrayList<ModelSlots> items;
-    CardView date;
+    CardView date,card_grid2,card_grid1;
     TextView dateset;
     String currentDate = "";
     String morDate="";
@@ -95,6 +95,8 @@ public class AppointmentSlotActivtiy extends AppCompatActivity {
         dateset = findViewById(R.id.dateset);
         date = findViewById(R.id.date);
         coverEvening=findViewById(R.id.coverEvening);
+        card_grid1=findViewById(R.id.card_grid1);
+        card_grid2=findViewById(R.id.card_grid2);
         line1_eveningSlot=findViewById(R.id.line1_eveningSlot);
         coverEvening.setVisibility(View.GONE);
         lin_AppointmentList= findViewById(R.id.lin_AppointmentList);
@@ -166,7 +168,7 @@ public class AppointmentSlotActivtiy extends AppCompatActivity {
                 ModelSlots.Example example=gson.fromJson(response, ModelSlots.Example.class);
                 if (example.Error.equalsIgnoreCase("Success")){
                     progressDialog.dismiss();
-                    gridTimeSlot1.setVisibility(View.VISIBLE);
+                    card_grid1.setVisibility(View.VISIBLE);
                     coverEvening.setVisibility(View.GONE);
                     List<ModelSlots.ResultRow> resultRows=example.ResultRows;
                     gridAdaptorEvening=new GridAdaptorEvening(getApplicationContext(),resultRows);
@@ -184,7 +186,7 @@ public class AppointmentSlotActivtiy extends AppCompatActivity {
 
                             dialogInterface.dismiss();
                             coverEvening.setVisibility(View.VISIBLE);
-                            gridTimeSlot1.setVisibility(View.GONE);
+                            card_grid1.setVisibility(View.GONE);
                             //ntd
                         }
                     });
@@ -199,7 +201,7 @@ public class AppointmentSlotActivtiy extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 coverEvening.setVisibility(View.VISIBLE);
                 progressDialog.dismiss();
-                gridTimeSlot1.setVisibility(View.GONE);
+                card_grid1.setVisibility(View.GONE);
                 if (error instanceof NoConnectionError) {
                     ConnectivityManager cm = (ConnectivityManager) getApplicationContext()
                             .getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -277,7 +279,7 @@ public class AppointmentSlotActivtiy extends AppCompatActivity {
                 ModelSlots.Example example=gson.fromJson(response, ModelSlots.Example.class);
                 if (example.Error.equalsIgnoreCase("Success")){
                     progressDialog.dismiss();
-                    gridView.setVisibility(View.VISIBLE);
+                    card_grid2.setVisibility(View.VISIBLE);
                     cover.setVisibility(View.GONE);
                     List<ModelSlots.ResultRow> resultRows=example.ResultRows;
                     gridAdaptor=new GridAdaptor(getApplicationContext(),resultRows);
@@ -295,7 +297,7 @@ public class AppointmentSlotActivtiy extends AppCompatActivity {
 
                             dialogInterface.dismiss();
                             cover.setVisibility(View.VISIBLE);
-                            gridView.setVisibility(View.GONE);
+                            card_grid2.setVisibility(View.GONE);
                             //ntd
                         }
                     });
@@ -311,7 +313,7 @@ public class AppointmentSlotActivtiy extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 progressDialog.dismiss();
                 cover.setVisibility(View.VISIBLE);
-                gridView.setVisibility(View.GONE);
+                card_grid2.setVisibility(View.GONE);
                 if (error instanceof NoConnectionError) {
                     ConnectivityManager cm = (ConnectivityManager) getApplicationContext()
                             .getSystemService(Context.CONNECTIVITY_SERVICE);

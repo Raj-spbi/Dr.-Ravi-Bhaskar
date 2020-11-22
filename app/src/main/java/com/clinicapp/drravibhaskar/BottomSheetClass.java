@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +42,7 @@ public class BottomSheetClass extends BottomSheetDialogFragment {
     ProgressDialog progressDialog;
     String name, mobile, address, email,patientId;
     EditText d_name, d_phone, d_address, txt_emailinfo;
+    TextView pateinf;
 
     private static final String TAG = "BottomSheetClass";
 
@@ -53,13 +55,16 @@ public class BottomSheetClass extends BottomSheetDialogFragment {
         d_phone = view.findViewById(R.id.d_phone);
         d_address = view.findViewById(R.id.d_address);
         txt_emailinfo = view.findViewById(R.id.txt_emailinfo);
+        pateinf=view.findViewById(R.id.pateinf);
         ElasticButton save = view.findViewById(R.id.save);
         ModelLogin.ResultRow data=SharedPrefManagerAdmin.getInstance(getContext()).getUser();
+        patientId=data.getPatientId();
         d_name.setText(data.getName());
         d_phone.setText(data.getMobileno());
         d_address.setText(data.getStreetAddress());
         txt_emailinfo.setText(data.getEmail());
-        patientId=data.getPatientId();
+        pateinf.setText(patientId);
+        //patientId=data.getPatientId();
         progressDialog = new ProgressDialog(getContext());
 
 
@@ -89,30 +94,33 @@ public class BottomSheetClass extends BottomSheetDialogFragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, WebURLS.UPDATE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                //Log.d("reso", "updateprofile: " + response);
+                try {
+                    JSONObject jsonObject=new JSONObject(response);
+                    if (jsonObject.getString("Error").equalsIgnoreCase("Success")){
+                        progressDialog.dismiss();
 
-                    Toast.makeText(getContext(), ""+response, Toast.LENGTH_SHORT).show();
-//                    Log.d("tests", "onResponse: "+response);
-//                    if (jsonObject.getString("Error").equals("Success")){
-//                        progressDialog.dismiss();
-//                        Log.d("reso", "updateprofile: " + response);
-//                        Toast.makeText(getContext(), "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
-//                        Intent intent=new Intent(getContext(), MainActivity.class);
-//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                        startActivity(intent);
-//
-//                        SharedPreferences sharedPreferences=getContext().getSharedPreferences("ashrmadminlogindata", Context.MODE_PRIVATE);
-//                        SharedPreferences.Editor editor=sharedPreferences.edit();
-//                        editor.putString("name",name);
-//                        editor.putString("contactNo",mobile);
-//                        editor.putString("Email",email);
-//                        editor.putString("Address1",address);
-//                        editor.apply();
-//                        editor.commit();
-//                    }else {
-//                        progressDialog.dismiss();
-//                        Toast.makeText(getContext(), "Patient profile not updated", Toast.LENGTH_SHORT).show();
-//                    }
+                        Toast.makeText(getContext(), "Profile Updated Successfully", Toast.LENGTH_SHORT).show();
+                        Intent intent=new Intent(getContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
 
+                        SharedPreferences sharedPreferences=getContext().getSharedPreferences("PatientLoginDetails", Context.MODE_PRIVATE);
+                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                        editor.putString("Name",name);
+                        editor.putString("mobileno",mobile);
+                        editor.putString("email",email);
+                        editor.putString("StreetAddress",address);
+                        editor.apply();
+                        editor.commit();
+                    }else {
+                        progressDialog.dismiss();
+                        Toast.makeText(getContext(), ""+jsonObject.getString("Error"), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    progressDialog.dismiss();
+                    e.printStackTrace();
+                }
             }
         }, new Response.ErrorListener() {
             @Override
@@ -125,11 +133,11 @@ public class BottomSheetClass extends BottomSheetDialogFragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> map = new HashMap<>();
-                map.put("name", name);
-                map.put("contactNo", mobile);
+                map.put("Name", name);
+                map.put("MobileNo", mobile);
                 map.put("Email", email);
-                map.put("Address1", address);
-                map.put("PatientID",patientId);
+                map.put("StreetAddress", address);
+                map.put("PatientId",patientId);
                 return map;
             }
         };

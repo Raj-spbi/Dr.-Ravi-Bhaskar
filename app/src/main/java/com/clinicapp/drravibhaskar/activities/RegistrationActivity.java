@@ -106,19 +106,21 @@ public class RegistrationActivity extends AppCompatActivity {
                 public void onResponse(String response) {
 
                     progressDialog.dismiss();
-                    Log.d("reso", "onResponseregister: " + response);
-
-                    if (response.equals("null")) {
-                        Toast.makeText(RegistrationActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Toast.makeText(RegistrationActivity.this, "Registration successfully", Toast.LENGTH_SHORT).show();
-                       // Log.d("reso", "onResponseregister: " + response);
-                        Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
-                        startActivity(intent);
-                        finish();
-
+                    //Log.d("reso", "onResponseregister: " + response);
+                    try {
+                        JSONObject jsonObject=new JSONObject(response);
+                        if (jsonObject.getString("Error").equalsIgnoreCase("Success")){
+                            Toast.makeText(RegistrationActivity.this, "Registration Successfully", Toast.LENGTH_SHORT).show();
+                            Intent intent=new Intent(getApplicationContext(),LoginActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            Toast.makeText(RegistrationActivity.this, ""+jsonObject.getString("Error"), Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+
                 }
             }, new Response.ErrorListener() {
                 @Override
