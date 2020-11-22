@@ -14,7 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activities.CalendarActivity"></activity>
+        <activity android:name=".activities.EditProfileActivity"></activity>
+        <activity android:name=".activities.CalendarActivity" />
         <activity android:name=".activities.AppointmentSlotActivtiy" />
         <activity android:name=".activities.BookingFormActivity" />
         <activity

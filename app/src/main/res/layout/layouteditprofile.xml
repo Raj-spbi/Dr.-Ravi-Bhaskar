@@ -172,7 +172,7 @@
                 android:layout_marginLeft="20dp"
                 android:fontFamily="@font/poppins"
                 android:padding="5dp"
-                android:text="Patient ID"
+                a.ndroid:text="Patient ID"
                 android:textSize="16dp" />
 
             <TextView
